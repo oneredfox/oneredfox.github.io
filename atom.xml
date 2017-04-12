@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://oneredfox.github.io/"/>
-  <updated>2017-04-12T02:03:27.000Z</updated>
+  <updated>2017-04-12T03:19:41.000Z</updated>
   <id>http://oneredfox.github.io/</id>
   
   <author>
@@ -16,26 +16,22 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>刚刚搭建了个博客</title>
+    <title></title>
     <link href="http://oneredfox.github.io/2017/04/11/%E5%88%9A%E6%90%AD%E5%BB%BA%E7%9A%84%E5%8D%9A%E5%AE%A2/"/>
     <id>http://oneredfox.github.io/2017/04/11/刚搭建的博客/</id>
     <published>2017-04-11T13:43:50.000Z</published>
-    <updated>2017-04-12T02:03:27.000Z</updated>
+    <updated>2017-04-12T03:19:41.000Z</updated>
     
-    <content type="html"><![CDATA[<p>刚刚搭建了个博客,详情可以参照<a href="http://www.jianshu.com/p/4eaddcbe4d12" target="_blank" rel="external">http://www.jianshu.com/p/4eaddcbe4d12</a></p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+    <content type="html"><![CDATA[<hr>
+<h2 id="刚刚搭建了个博客"><a href="#刚刚搭建了个博客" class="headerlink" title="#刚刚搭建了个博客"></a>#刚刚搭建了个博客</h2><p>刚刚搭建了个博客,详情可以参照<a href="http://www.jianshu.com/p/4eaddcbe4d12" target="_blank" rel="external">http://www.jianshu.com/p/4eaddcbe4d12</a></p>
+<p>####注意:<br>里面的安装nvm有点问题,安装后总是提示  “command not found”,所以安装nvm和node不要按照那个,具体可以参考<a href="http://www.jianshu.com/p/a6044bd2ad35" target="_blank" rel="external">http://www.jianshu.com/p/a6044bd2ad35</a>.</p>
+<p>我的mac版本:10.12 安装的node版本:7.0</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;刚刚搭建了个博客,详情可以参照&lt;a href=&quot;http://www.jianshu.com/p/4eaddcbe4d12&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.jianshu.com/p/4eaddcbe4d12&lt;/a&gt;&lt;/
+      &lt;hr&gt;
+&lt;h2 id=&quot;刚刚搭建了个博客&quot;&gt;&lt;a href=&quot;#刚刚搭建了个博客&quot; class=&quot;headerlink&quot; title=&quot;#刚刚搭建了个博客&quot;&gt;&lt;/a&gt;#刚刚搭建了个博客&lt;/h2&gt;&lt;p&gt;刚刚搭建了个博客,详情可以参照&lt;a href=&quot;http://www.jian
     
     </summary>
     
