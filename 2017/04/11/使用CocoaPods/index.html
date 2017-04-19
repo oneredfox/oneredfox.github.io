@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="刘子兴的博客" href="/atom.xml">
     
 
-    <link rel="canonical" href="http://oneredfox.github.io"/>
+    <link rel="canonical" href="http://oneredfox.github.io/2017/04/11/使用CocoaPods/"/>
 
                  
 </head>
@@ -51,7 +51,7 @@
     </span>
 
     
-<header class="panel-cover " style="background-image: url(/images/background-cover.jpg)">
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
   <div class="panel-main">
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
@@ -134,64 +134,84 @@
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
-            <div class="main-post-list">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-04-11T13:43:50.000Z" class="post-list__meta--date date">2017-04-11</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title"></h1>
+  </header>
+
+  <section class="post">
+    <hr>
+<h2 id="CocoaPods的安装和使用-一"><a href="#CocoaPods的安装和使用-一" class="headerlink" title="CocoaPods的安装和使用:一"></a>CocoaPods的安装和使用:一</h2><p>这里学习下CocoaPods,写下这个博客也方便以后查看</p>
+<p>###一: CocoaPods 安装<br>  CocoaPods的安装方式很简单,Mac下自带ruby,直接使用ruby的gem命令即可.<br>  注意:ruby的软件源eubygems.org因为使用亚马逊的云服务,所以被屏蔽掉了,需要更下下ruby的源,这里使用ruby-china提供的镜像服务(如果直接使用sudo gem install cocoapods会发现半天没反应)</p>
+<p>  1.如果gem版本太低了,可以直接升级gem</p>
+<pre><code>sudo gem update --system
+</code></pre><p>  2.移除rubygems.org</p>
+<pre><code>gem sources --remove https://rubygems.org/ 
+</code></pre><p>  3.用淘宝提供的镜像服务替换源</p>
+<pre><code>gem sources -a https://ruby.taobao.org/
+</code></pre><p>  4.安装好后可以用 <code>gem sources -l</code>检查当前SOURCES源<br>   只有在终端出现下面文字才表明是成功的</p>
+<pre><code>*** CURRENT SOURCES ***                                             
+https://ruby.taobao.org/
+</code></pre><p>  5.上面所有的命令完成时,在终端运行</p>
+<pre><code>sudo gem install -n /usr/local/bin cocoapods --pre
+</code></pre><p>  6.注意点:</p>
+<pre><code>ruby -v可以查看当前ruby版本,
+rvm list known查看目前的所有ruby版本,
+如果提示command not found 请先安装rvm,
+curl -L get.rvm.io | bash -s stable
+</code></pre><p>  7.使用CocoaPods的镜像索引<br>    所有项目的Podspec文件都托管在<a href="https://github.com/CocoaPods/Specs.第一次执行pod" target="_blank" rel="external">https://github.com/CocoaPods/Specs.第一次执行pod</a> setup时,CocoaPods会将这些Podsapce索引文件更新到本地的~/.cocoapods/路径下,这个所以文件比较大,第一次更新时非常慢.友好人士在国内的服务器建立了Cocoapods索引库的镜像,所以执行索引跟新操作时候会快很多.具体操作方法如下:</p>
+<pre><code>pod repo remove master
+git clone https://github.com/CocoaPods/Specs.git ~/.cocoapods/repos/master
+pod repo update  
+</code></pre><p>   这是使用gitcafe上的镜像,将以上代码中的 <a href="https://gitcafe.com/akuandev/Specs.git" target="_blank" rel="external">https://gitcafe.com/akuandev/Specs.git</a> 替换成 <a href="https://git.oschina.net/akuandev/Specs.git" target="_blank" rel="external">https://git.oschina.net/akuandev/Specs.git</a> 即可使用oschina上的镜像。</p>
+<p>###CocoaPods使用<br>  1.新建项目,cd到目录下<br>  2.vim一个名为Podfile的文件,如下格式,并将以来的库添加进去</p>
+<pre><code>platform :ios,10.2
+target &apos;your project&apos; do
+pod &apos;AFNetworking&apos;, &apos;~&gt;3.0.4&apos;
+end
+</code></pre><p>  3.执行命令 <code>pod install</code><br>    现在,第三方已经下载完并且设置好了编译参数和依赖,只需要记住如下两点:<br>    3.1使用CocoaPods生成的 .xcworkspace文件来打开工程<br>    3.2每次更改了Podfile文件,都需要重新执行以下 <code>pod insatall</code> 命令 </p>
+<p>  4.如果不知道第三方库的最新版本,可以使用命令行进行查找</p>
+<pre><code>pod search AFNetworking
+</code></pre>
+  </section>
+
+</article>
+
+<section class="read-more">
+           
     
-  <ol class="post-list">
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/04/11/使用CocoaPods/" title="link to post.title"></a></h2>
-      <p class="excerpt">
-    
-      
-CocoaPods的安装和使用:一这里学习下CocoaPods,写下这个博客也方便以后查看
-###一: CocoaPods 安装  CocoaPods的安装方式很简单,Mac下自带ruby,直接使用ruby的gem命令即可.  注意:ruby的软件源eubygems.org因为使用亚马逊的云服务,所以被屏蔽掉了,需要更下下ruby的源,这里使用ruby-china提供的镜像服务(如果直接使用su
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-04-11T13:43:50.000Z" class="post-list__meta--date date">2017-04-11</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/04/11/使用CocoaPods/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/04/11/刚搭建的博客/" title="link to post.title"></a></h2>
-      <p class="excerpt">
-    
-      
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/04/11/刚搭建的博客/" title=""></a></h2>
+                <p class="excerpt">
+                
+                
 刚刚搭建了个博客刚刚搭建了个博客,详情可以参照http://www.jianshu.com/p/4eaddcbe4d12
-注意:里面的安装nvm有点问题,安装后总是提示  “command not found”,所以安装nvm和node不要按照那个,具体可以参考http://www.jianshu.com/p/a6044bd2ad35.
-我的mac版本:10.12 安装的node版本:7.0
-
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-04-11T13:43:50.000Z" class="post-list__meta--date date">2017-04-11</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/04/11/刚搭建的博客/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
+注意:里面的安装nvm有点问题,安装后总是提示  “command not found”,所以安装nvm和node不要按照那个,具体可以参考http://www.jianshu
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-04-11T13:43:50.000Z" class="post-list__meta--date date">2017-04-11</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/04/11/刚搭建的博客/">继续阅读</a></div>
+                       
+            </div>
+        
+     
+   
+   
   
-    
-  </ol>
+</section>
 
-
- <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    }); 
-    
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-</div>
-
+  
 
             <footer class="footer">
     <span class="footer__copyright">
