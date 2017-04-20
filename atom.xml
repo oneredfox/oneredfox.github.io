@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://oneredfox.github.io/"/>
-  <updated>2017-04-20T03:02:14.000Z</updated>
+  <updated>2017-04-20T03:04:28.000Z</updated>
   <id>http://oneredfox.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://oneredfox.github.io/2017/04/20/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/"/>
     <id>http://oneredfox.github.io/2017/04/20/日常总结/</id>
     <published>2017-04-20T14:55:08.000Z</published>
-    <updated>2017-04-20T03:02:14.000Z</updated>
+    <updated>2017-04-20T03:04:28.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="一-我们有时候需要将一个Core-Foundation对象转换成一个Objective-C对象-这个时候我们需要告诉编译器-转换过程中引用计数如何调整-这时候就引入了与bridge相关的关键字"><a href="#一-我们有时候需要将一个Core-Foundation对象转换成一个Objective-C对象-这个时候我们需要告诉编译器-转换过程中引用计数如何调整-这时候就引入了与bridge相关的关键字" class="headerlink" title="一:我们有时候需要将一个Core Foundation对象转换成一个Objective-C对象,这个时候我们需要告诉编译器,转换过程中引用计数如何调整,这时候就引入了与bridge相关的关键字,"></a>一:我们有时候需要将一个Core Foundation对象转换成一个Objective-C对象,这个时候我们需要告诉编译器,转换过程中引用计数如何调整,这时候就引入了与bridge相关的关键字,</h3><ol>
 <li>__bridge:只做类型转换,不修改相关对象的引用技术,原来的Core Foundation对象在不用时,需要调用CFRelease方法;</li>
@@ -40,7 +40,7 @@ UIKIT_EXTERN const UIWindowLevel UIWindowLevelStatusBar;
     </summary>
     
     
-      <category term="清风" scheme="http://oneredfox.github.io/tags/%E6%B8%85%E9%A3%8E/"/>
+      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
     
   </entry>
   
@@ -49,7 +49,7 @@ UIKIT_EXTERN const UIWindowLevel UIWindowLevelStatusBar;
     <link href="http://oneredfox.github.io/2017/04/11/%E4%BD%BF%E7%94%A8CocoaPods/"/>
     <id>http://oneredfox.github.io/2017/04/11/使用CocoaPods/</id>
     <published>2017-04-10T16:00:00.000Z</published>
-    <updated>2017-04-20T03:02:32.000Z</updated>
+    <updated>2017-04-20T03:04:38.000Z</updated>
     
     <content type="html"><![CDATA[<p>这里学习下CocoaPods,写下这个博客也方便以后查看</p>
 <h3 id="一-CocoaPods-安装"><a href="#一-CocoaPods-安装" class="headerlink" title="一: CocoaPods 安装"></a>一: CocoaPods 安装</h3><p>  CocoaPods的安装方式很简单,Mac下自带ruby,直接使用ruby的gem命令即可.<br>  注意:ruby的软件源eubygems.org因为使用亚马逊的云服务,所以被屏蔽掉了,需要更下下ruby的源,这里使用ruby-china提供的镜像服务(如果直接使用sudo gem install cocoapods会发现半天没反应)</p>
@@ -92,7 +92,7 @@ end
     </summary>
     
     
-      <category term="清风" scheme="http://oneredfox.github.io/tags/%E6%B8%85%E9%A3%8E/"/>
+      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
     
   </entry>
   
@@ -101,7 +101,7 @@ end
     <link href="http://oneredfox.github.io/2017/04/11/%E5%88%9A%E6%90%AD%E5%BB%BA%E7%9A%84%E5%8D%9A%E5%AE%A2/"/>
     <id>http://oneredfox.github.io/2017/04/11/刚搭建的博客/</id>
     <published>2017-04-10T16:00:00.000Z</published>
-    <updated>2017-04-20T03:03:28.000Z</updated>
+    <updated>2017-04-20T03:04:20.000Z</updated>
     
     <content type="html"><![CDATA[<p>刚刚搭建了个博客,详情可以参照<a href="http://www.jianshu.com/p/4eaddcbe4d12" target="_blank" rel="external">http://www.jianshu.com/p/4eaddcbe4d12</a></p>
 <h4 id="注意"><a href="#注意" class="headerlink" title="注意:"></a>注意:</h4><p>里面的安装nvm有点问题,安装后总是提示  “command not found”,所以安装nvm和node不要按照那个,具体可以参考<a href="http://www.jianshu.com/p/a6044bd2ad35" target="_blank" rel="external">http://www.jianshu.com/p/a6044bd2ad35</a>.</p>
@@ -115,7 +115,7 @@ end
     </summary>
     
     
-      <category term="清风" scheme="http://oneredfox.github.io/tags/%E6%B8%85%E9%A3%8E/"/>
+      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
     
   </entry>
   
