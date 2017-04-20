@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="刘子兴的博客" href="/atom.xml">
     
 
-    <link rel="canonical" href="http://oneredfox.github.io"/>
+    <link rel="canonical" href="http://oneredfox.github.io/2017/04/19/日常总结/"/>
 
                  
 </head>
@@ -51,7 +51,7 @@
     </span>
 
     
-<header class="panel-cover " style="background-image: url(/images/background-cover.jpg)">
+<header class="panel-cover panel-cover--collapsed" style="background-image: url(/images/background-cover.jpg)">
   <div class="panel-main">
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
@@ -134,80 +134,64 @@
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
-            <div class="main-post-list">
-    
-  <ol class="post-list">
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/04/19/日常总结/" title="link to post.title"></a></h2>
-      <p class="excerpt">
-    
-      
-日常总结####一:我们有时候需要将一个Core Foundation对象转换成一个Objective-C对象,这个时候我们需要告诉编译器,转换过程中引用计数如何调整,这时候就引入了与bridge相关的关键字,
+            <article class="post-container post-container--single">
 
-__bridge:只做类型转换,不修改相关对象的引用技术,原来的Core Foundation对象在不用时,需要调用CFRelease方法;
-__bridge_retailned:类型
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-04-19T10:03:24.000Z" class="post-list__meta--date date">2017-04-19</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/04/19/日常总结/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-04-19T10:03:24.000Z" class="post-list__meta--date date">2017-04-19</time> &#8226; <span class="post-meta__tags tags">于&nbsp; </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title"></h1>
+  </header>
+
+  <section class="post">
+    <hr>
+<h2 id="日常总结"><a href="#日常总结" class="headerlink" title="日常总结"></a>日常总结</h2><p>####一:我们有时候需要将一个Core Foundation对象转换成一个Objective-C对象,这个时候我们需要告诉编译器,转换过程中引用计数如何调整,这时候就引入了与bridge相关的关键字,</p>
+<ol>
+<li>__bridge:只做类型转换,不修改相关对象的引用技术,原来的Core Foundation对象在不用时,需要调用CFRelease方法;</li>
+<li>__bridge_retailned:类型转换后,将先关对象的引用技术加1,原来的Core Foundation对象不用时,需要调用CFRelease方法;</li>
+<li>__bridge_transfer:类型转换后,将该对象的引用计数交给arc管理,原来的Core Foundation对象在不用时,不需要调用CFRelease方法.</li>
+</ol>
+<p>####二:UIWindow有个属性WindowLevel,该属性蒂尼了UIWindow的层级,系统定义的WindowLevel一共有3种取值,如下所示:</p>
+<pre><code>UIKIT_EXTERN const UIWindowLevel UIWindowLevelNormal;
+UIKIT_EXTERN const UIWindowLevel UIWindowLevelAlert;
+UIKIT_EXTERN const UIWindowLevel UIWindowLevelStatusBar;
+</code></pre><p>   程序默认热UIWindow的层级是UIWindowLevelNormal,当系统需要在上面覆盖UIAlertContronler时,就会创建一个层级是UIWindowLevelAlert的UIWindow,因为其WindowLevel值更高,所以覆盖在上面了.<br>   需要注意的是:在实际应用中,WindowLevel并不仅限于上面三个值.</p>
+
+  </section>
+
+</article>
+
+<section class="read-more">
+           
     
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/04/11/使用CocoaPods/" title="link to post.title"></a></h2>
-      <p class="excerpt">
-    
-      
-CocoaPods的安装和使用:一这里学习下CocoaPods,写下这个博客也方便以后查看
-一: CocoaPods 安装  CocoaPods的安装方式很简单,Mac下自带ruby,直接使用ruby的gem命令即可.  注意:ruby的软件源eubygems.org因为使用亚马逊的云服务,所以被屏蔽掉了,需要更下下ruby的源,这里使用ruby-china提供的镜像服务(如果直接使用sudo 
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-04-11T13:43:50.000Z" class="post-list__meta--date date">2017-04-11</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/04/11/使用CocoaPods/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/04/11/刚搭建的博客/" title="link to post.title"></a></h2>
-      <p class="excerpt">
-    
-      
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2017/04/11/刚搭建的博客/" title=""></a></h2>
+                <p class="excerpt">
+                
+                
 刚刚搭建了个博客刚刚搭建了个博客,详情可以参照http://www.jianshu.com/p/4eaddcbe4d12
-注意:里面的安装nvm有点问题,安装后总是提示  “command not found”,所以安装nvm和node不要按照那个,具体可以参考http://www.jianshu.com/p/a6044bd2ad35.
-我的mac版本:10.12 安装的node版本:7.0
-
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-04-11T13:43:50.000Z" class="post-list__meta--date date">2017-04-11</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/04/11/刚搭建的博客/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
+注意:里面的安装nvm有点问题,安装后总是提示  “command not found”,所以安装nvm和node不要按照那个,具体可以参考http://www.jianshu
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2017-04-11T13:43:50.000Z" class="post-list__meta--date date">2017-04-11</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/04/11/刚搭建的博客/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+        
+     
+   
+   
   
-    
-  </ol>
+</section>
 
-
- <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    }); 
-    
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-</div>
-
+  
 
             <footer class="footer">
     <span class="footer__copyright">
