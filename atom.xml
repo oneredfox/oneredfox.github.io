@@ -87,11 +87,54 @@ textfiled.keyboardType = UIKeyboardTypeDefault;
   </entry>
   
   <entry>
+    <title>NSCache</title>
+    <link href="http://oneredfox.github.io/2015/04/21/NSCache/"/>
+    <id>http://oneredfox.github.io/2015/04/21/NSCache/</id>
+    <published>2015-04-21T14:55:08.000Z</published>
+    <updated>2017-07-20T07:10:58.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="NSCache-基本介绍"><a href="#NSCache-基本介绍" class="headerlink" title="NSCache 基本介绍"></a>NSCache 基本介绍</h1><p><code>NSCache</code>是苹果官方提供的缓存类,它的用法和<code>NSMutableDictionary</code>非常类似.</p>
+<p><code>NSCache</code>是一个类似于集合的容器,即缓存.它存储key-value,这一点非常类似<code>NSDictionary</code>. 开发者一般用<code>NSCache</code>来缓存临时存储短时间但是使用创建成本高的对象,重用这些对象可以优化性能,因为他们的值不需要被重新计算.另外一方面,这些对象对于程序来说是不要紧的,在内存紧张的时候会被丢弃,如果对象被丢弃了,则下次使用的时候需要重新计算.</p>
+<p>当一个key-value对在缓存时,缓存维护它的一个强引用.存储在<code>NSCache</code>中的通用数据类型通常是实现了<code>NSDiscardableContent</code>协议的对象.在缓存中存储这类对象的好处是,当你不需要它的时候可以丢弃这些内容,以节省内存.默认情况下,缓存中的<code>NSDiscardableContent</code>对象在其内容被丢弃的时候,会被移除缓存,如果一个<code>NSDiscardableContent</code>被放进缓存，则在对象被移除时，缓存会调用<code>discardContentIfPossible</code>方法。</p>
+<p><code>NSCache</code>与可变集合的不同:   </p>
+<ol>
+<li><code>NSCache</code>类结合了各种自动删除策略，以确保不会占用过多的系统内存。如果其它应用需要内存时，系统自动执行这些策略。当调用这些策略时，会从缓存中删除一些对象，以最大限度减少内存的占用</li>
+<li><code>NSCache</code>是线程安全的，我们可以在不同的线程中添加、删除和查询缓存中的对象，而不需要锁定缓存区域</li>
+<li>不像<code>NSMutableDictionary</code>对象，一个缓存对象不会拷贝key对象</li>
+</ol>
+<h2 id="属性介绍"><a href="#属性介绍" class="headerlink" title="属性介绍"></a>属性介绍</h2><p>@property NSUInteger countLimit 缓存应持有的对象的最大数量。</p>
+<pre><code>This is not a strict limit—if the cache goes over the limit, an object in the cache could be evicted instantly, later, or possibly never, depending on the implementation details of the cache. 
+这不是一个严格的限制。如果缓存的数量超过这个数量，缓存中的一个对象可能会被立即丢弃、或者稍后、也可能永远不会，具体依赖于缓存的实现细节。
+</code></pre><p>@property NSUInteger totalCostLimit  </p>
+<pre><code>limits are imprecise/not strict
+来限定缓存能维持的最大内存,但totalCostLimit也不是一个严格限制
+</code></pre><p>@property BOOL evictsObjectsWithDiscardedContent;</p>
+<pre><code>是否自动清理缓存,默认是YES
+</code></pre><h2 id="存取方法介绍"><a href="#存取方法介绍" class="headerlink" title="存取方法介绍"></a>存取方法介绍</h2><pre><code>- setObject:forKey:
+- setObject:forKey:cost:
+- removeObjectForKey:
+- removeAllObjects
+</code></pre><h2 id="NSCacheDelegate"><a href="#NSCacheDelegate" class="headerlink" title="NSCacheDelegate"></a>NSCacheDelegate</h2><pre><code>- (void)cache:(NSCache *)cachewillEvictObject:(id)obj
+</code></pre><p> 缓存将要删除对象时调用，不能在此方法中修改缓存</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;NSCache-基本介绍&quot;&gt;&lt;a href=&quot;#NSCache-基本介绍&quot; class=&quot;headerlink&quot; title=&quot;NSCache 基本介绍&quot;&gt;&lt;/a&gt;NSCache 基本介绍&lt;/h1&gt;&lt;p&gt;&lt;code&gt;NSCache&lt;/code&gt;是苹果官方提供的缓存
+    
+    </summary>
+    
+    
+      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
+    
+  </entry>
+  
+  <entry>
     <title>日常总结</title>
     <link href="http://oneredfox.github.io/2015/04/20/%E6%97%A5%E5%B8%B8%E6%80%BB%E7%BB%93/"/>
     <id>http://oneredfox.github.io/2015/04/20/日常总结/</id>
     <published>2015-04-20T14:55:08.000Z</published>
-    <updated>2017-07-19T07:10:09.000Z</updated>
+    <updated>2017-07-20T03:19:26.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="一-我们有时候需要将一个Core-Foundation对象转换成一个Objective-C对象-这个时候我们需要告诉编译器-转换过程中引用计数如何调整-这时候就引入了与bridge相关的关键字"><a href="#一-我们有时候需要将一个Core-Foundation对象转换成一个Objective-C对象-这个时候我们需要告诉编译器-转换过程中引用计数如何调整-这时候就引入了与bridge相关的关键字" class="headerlink" title="一:我们有时候需要将一个Core Foundation对象转换成一个Objective-C对象,这个时候我们需要告诉编译器,转换过程中引用计数如何调整,这时候就引入了与bridge相关的关键字,"></a>一:我们有时候需要将一个Core Foundation对象转换成一个Objective-C对象,这个时候我们需要告诉编译器,转换过程中引用计数如何调整,这时候就引入了与bridge相关的关键字,</h3><ol>
 <li>__bridge:只做类型转换,不修改相关对象的引用技术,原来的Core Foundation对象在不用时,需要调用CFRelease方法;</li>
