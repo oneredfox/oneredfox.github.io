@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>刘子兴的博客</title>
+    <title>安装Nvm | 刘子兴的博客</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="最近比较懒...">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="刘子兴的博客">
+    <meta name="twitter:title" content="安装Nvm | 刘子兴的博客">
     <meta name="twitter:description" content="最近比较懒...">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="刘子兴的博客">
+    <meta property="og:title" content="安装Nvm | 刘子兴的博客">
     <meta property="og:description" content="最近比较懒...">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="刘子兴的博客" href="/atom.xml">
     
 
-    <link rel="canonical" href="http://oneredfox.github.io"/>
+    <link rel="canonical" href="http://oneredfox.github.io/2014/02/21/用Nvm安装Node/"/>
 
                  
 </head>
@@ -134,50 +134,89 @@
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner">
-            <div class="main-post-list">
+            <article class="post-container post-container--single">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2014-02-21T14:55:08.000Z" class="post-list__meta--date date">2014-02-21</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/三尾/">三尾</a>
+ </span>
+      <span class="page-pv">
+      &nbsp;阅读&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>
+      </span> 
+   
+    </div>
+    <h1 class="post-title">安装Nvm</h1>
+  </header>
+
+  <section class="post">
+    <h2 id="一-安装HomeBrew"><a href="#一-安装HomeBrew" class="headerlink" title="一: 安装HomeBrew"></a>一: 安装HomeBrew</h2><p>打开终端,输入</p>
+<pre><code>//如果已安装HomeBrew 无需执行此行
+$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+</code></pre><h2 id="二-安装Nvm"><a href="#二-安装Nvm" class="headerlink" title="二: 安装Nvm"></a>二: 安装Nvm</h2><p><code>$ brew install nvm</code></p>
+<h2 id="三-在shell中使用nvm命令"><a href="#三-在shell中使用nvm命令" class="headerlink" title="三: 在shell中使用nvm命令"></a>三: 在shell中使用nvm命令</h2><p>2.1 首先查看是否有.bash_profile文件,没有cd到文件夹执行以下命令</p>
+<pre><code>$ vim .bash_profile
+</code></pre><p>然后输入以下命令:</p>
+<pre><code>export NVM_DIR=~/.nvm`
+source $(brew --prefix nvm)/nvm.sh
+</code></pre><p>最后重新source</p>
+<p><code>$ source .bash_profile</code></p>
+<h2 id="四-用nvm安装Node"><a href="#四-用nvm安装Node" class="headerlink" title="四: 用nvm安装Node    "></a>四: 用nvm安装Node    </h2><p>在终端输入以下命令:</p>
+<pre><code>$ nvm ls-remote  查看 所有的node可用版本
+$ nvm install xxx  下载你想要的版本
+$ nvm use xxx  使用指定版本的node 
+$ nvm alias default xxx  每次启动终端都使用该版本的node 
+</code></pre><h2 id="五-安装完成"><a href="#五-安装完成" class="headerlink" title="五: 安装完成"></a>五: 安装完成</h2><p>在终端输入以下命令:</p>
+<pre><code>$ node -v
+$ npm -v 
+</code></pre>
+  </section>
+
+</article>
+
+<section class="read-more">
+           
     
-  <ol class="post-list">
-  
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2015/04/20/日常总结/" title="link to post.title">日常总结</a></h2>
-      <p class="excerpt">
-    
-      一:我们有时候需要将一个Core Foundation对象转换成一个Objective-C对象,这个时候我们需要告诉编译器,转换过程中引用计数如何调整,这时候就引入了与bridge相关的关键字,
-__bridge:只做类型转换,不修改相关对象的引用技术,原来的Core Foundation对象在不用时,需要调用CFRelease方法;
-__bridge_retailned:类型转换后,将先关对象的
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2015-04-20T14:55:08.000Z" class="post-list__meta--date date">2015-04-20</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">最近的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2013/02/11/刚搭建的博客/" title="刚刚搭建了个博客">刚刚搭建了个博客</a></h2>
+                <p class="excerpt">
+                
+                刚刚搭建了个博客,详情可以参照http://www.jianshu.com/p/4eaddcbe4d12主要分三步来搭建:
+一: 创建Github域名和控件####1.1 注册需要准备一个Github账号(不会的可以百度教程),需要注意的是username,这个名字将会是你的域名,像username
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2013-02-10T16:00:00.000Z" class="post-list__meta--date date">2013-02-11</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+  <a class="tag-link" href="/tags/三尾/">三尾</a>
+</span><a class="btn-border-small" href="/2013/02/11/刚搭建的博客/">继续阅读</a></div>
+                           
+            </div>
+        
+        
+               
+            <div class="read-more-item">
+                <span class="read-more-item-dim">更早的文章</span>
+                <h2 class="post-list__post-title post-title"><a href="/2015/04/20/日常总结/" title="日常总结">日常总结</a></h2>
+                <p class="excerpt">
+                
+                一:我们有时候需要将一个Core Foundation对象转换成一个Objective-C对象,这个时候我们需要告诉编译器,转换过程中引用计数如何调整,这时候就引入了与bridge相关的关键字,
+__bridge:只做类型转换,不修改相关对象的引用技术,原来的Core Foundation对象在不用
+                &hellip;
+                </p>
+                <div class="post-list__meta"><time datetime="2015-04-20T14:55:08.000Z" class="post-list__meta--date date">2015-04-20</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/三尾/">三尾</a>
 </span><a class="btn-border-small" href="/2015/04/20/日常总结/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
+                       
+            </div>
+        
+     
+   
+   
   
-    
-  </ol>
+</section>
 
-
- <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
-        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
-        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
-        messageStyle: "none"
-    }); 
-    
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-</div>
-
+  
 
             <footer class="footer">
     <span class="footer__copyright">

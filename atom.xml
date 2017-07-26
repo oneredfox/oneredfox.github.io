@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://oneredfox.github.io/"/>
-  <updated>2017-07-19T07:47:42.000Z</updated>
+  <updated>2017-07-26T08:04:42.000Z</updated>
   <id>http://oneredfox.github.io/</id>
   
   <author>
@@ -14,6 +14,49 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>NSCache</title>
+    <link href="http://oneredfox.github.io/2016/04/21/NSCache/"/>
+    <id>http://oneredfox.github.io/2016/04/21/NSCache/</id>
+    <published>2016-04-21T14:55:08.000Z</published>
+    <updated>2017-07-26T08:04:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="NSCache-基本介绍"><a href="#NSCache-基本介绍" class="headerlink" title="NSCache 基本介绍"></a>NSCache 基本介绍</h1><p><code>NSCache</code>是苹果官方提供的缓存类,它的用法和<code>NSMutableDictionary</code>非常类似.</p>
+<p><code>NSCache</code>是一个类似于集合的容器,即缓存.它存储key-value,这一点非常类似<code>NSDictionary</code>. 开发者一般用<code>NSCache</code>来缓存临时存储短时间但是使用创建成本高的对象,重用这些对象可以优化性能,因为他们的值不需要被重新计算.另外一方面,这些对象对于程序来说是不要紧的,在内存紧张的时候会被丢弃,如果对象被丢弃了,则下次使用的时候需要重新计算.</p>
+<p>当一个key-value对在缓存时,缓存维护它的一个强引用.存储在<code>NSCache</code>中的通用数据类型通常是实现了<code>NSDiscardableContent</code>协议的对象.在缓存中存储这类对象的好处是,当你不需要它的时候可以丢弃这些内容,以节省内存.默认情况下,缓存中的<code>NSDiscardableContent</code>对象在其内容被丢弃的时候,会被移除缓存,如果一个<code>NSDiscardableContent</code>被放进缓存，则在对象被移除时，缓存会调用<code>discardContentIfPossible</code>方法。</p>
+<p><code>NSCache</code>与可变集合的不同:   </p>
+<ol>
+<li><code>NSCache</code>类结合了各种自动删除策略，以确保不会占用过多的系统内存。如果其它应用需要内存时，系统自动执行这些策略。当调用这些策略时，会从缓存中删除一些对象，以最大限度减少内存的占用</li>
+<li><code>NSCache</code>是线程安全的，我们可以在不同的线程中添加、删除和查询缓存中的对象，而不需要锁定缓存区域</li>
+<li>不像<code>NSMutableDictionary</code>对象，一个缓存对象不会拷贝key对象</li>
+</ol>
+<h2 id="属性介绍"><a href="#属性介绍" class="headerlink" title="属性介绍"></a>属性介绍</h2><p>@property NSUInteger countLimit 缓存应持有的对象的最大数量。</p>
+<pre><code>This is not a strict limit—if the cache goes over the limit, an object in the cache could be evicted instantly, later, or possibly never, depending on the implementation details of the cache. 
+这不是一个严格的限制。如果缓存的数量超过这个数量，缓存中的一个对象可能会被立即丢弃、或者稍后、也可能永远不会，具体依赖于缓存的实现细节。
+</code></pre><p>@property NSUInteger totalCostLimit  </p>
+<pre><code>limits are imprecise/not strict
+来限定缓存能维持的最大内存,但totalCostLimit也不是一个严格限制
+</code></pre><p>@property BOOL evictsObjectsWithDiscardedContent;</p>
+<pre><code>是否自动清理缓存,默认是YES
+</code></pre><h2 id="存取方法介绍"><a href="#存取方法介绍" class="headerlink" title="存取方法介绍"></a>存取方法介绍</h2><pre><code>- setObject:forKey:
+- setObject:forKey:cost:
+- removeObjectForKey:
+- removeAllObjects
+</code></pre><h2 id="NSCacheDelegate"><a href="#NSCacheDelegate" class="headerlink" title="NSCacheDelegate"></a>NSCacheDelegate</h2><pre><code>- (void)cache:(NSCache *)cachewillEvictObject:(id)obj
+</code></pre><p> 缓存将要删除对象时调用，不能在此方法中修改缓存</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;NSCache-基本介绍&quot;&gt;&lt;a href=&quot;#NSCache-基本介绍&quot; class=&quot;headerlink&quot; title=&quot;NSCache 基本介绍&quot;&gt;&lt;/a&gt;NSCache 基本介绍&lt;/h1&gt;&lt;p&gt;&lt;code&gt;NSCache&lt;/code&gt;是苹果官方提供的缓存
+    
+    </summary>
+    
+    
+      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>NS_OPTIONS与NS_ENUM的区别</title>
@@ -87,40 +130,49 @@ textfiled.keyboardType = UIKeyboardTypeDefault;
   </entry>
   
   <entry>
-    <title>NSCache</title>
-    <link href="http://oneredfox.github.io/2015/04/21/NSCache/"/>
-    <id>http://oneredfox.github.io/2015/04/21/NSCache/</id>
-    <published>2015-04-21T14:55:08.000Z</published>
-    <updated>2017-07-20T07:10:58.000Z</updated>
+    <title>CocoaPods的安装和使用:一</title>
+    <link href="http://oneredfox.github.io/2015/06/11/%E4%BD%BF%E7%94%A8CocoaPods/"/>
+    <id>http://oneredfox.github.io/2015/06/11/使用CocoaPods/</id>
+    <published>2015-06-10T16:00:00.000Z</published>
+    <updated>2017-07-26T08:04:20.000Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="NSCache-基本介绍"><a href="#NSCache-基本介绍" class="headerlink" title="NSCache 基本介绍"></a>NSCache 基本介绍</h1><p><code>NSCache</code>是苹果官方提供的缓存类,它的用法和<code>NSMutableDictionary</code>非常类似.</p>
-<p><code>NSCache</code>是一个类似于集合的容器,即缓存.它存储key-value,这一点非常类似<code>NSDictionary</code>. 开发者一般用<code>NSCache</code>来缓存临时存储短时间但是使用创建成本高的对象,重用这些对象可以优化性能,因为他们的值不需要被重新计算.另外一方面,这些对象对于程序来说是不要紧的,在内存紧张的时候会被丢弃,如果对象被丢弃了,则下次使用的时候需要重新计算.</p>
-<p>当一个key-value对在缓存时,缓存维护它的一个强引用.存储在<code>NSCache</code>中的通用数据类型通常是实现了<code>NSDiscardableContent</code>协议的对象.在缓存中存储这类对象的好处是,当你不需要它的时候可以丢弃这些内容,以节省内存.默认情况下,缓存中的<code>NSDiscardableContent</code>对象在其内容被丢弃的时候,会被移除缓存,如果一个<code>NSDiscardableContent</code>被放进缓存，则在对象被移除时，缓存会调用<code>discardContentIfPossible</code>方法。</p>
-<p><code>NSCache</code>与可变集合的不同:   </p>
-<ol>
-<li><code>NSCache</code>类结合了各种自动删除策略，以确保不会占用过多的系统内存。如果其它应用需要内存时，系统自动执行这些策略。当调用这些策略时，会从缓存中删除一些对象，以最大限度减少内存的占用</li>
-<li><code>NSCache</code>是线程安全的，我们可以在不同的线程中添加、删除和查询缓存中的对象，而不需要锁定缓存区域</li>
-<li>不像<code>NSMutableDictionary</code>对象，一个缓存对象不会拷贝key对象</li>
-</ol>
-<h2 id="属性介绍"><a href="#属性介绍" class="headerlink" title="属性介绍"></a>属性介绍</h2><p>@property NSUInteger countLimit 缓存应持有的对象的最大数量。</p>
-<pre><code>This is not a strict limit—if the cache goes over the limit, an object in the cache could be evicted instantly, later, or possibly never, depending on the implementation details of the cache. 
-这不是一个严格的限制。如果缓存的数量超过这个数量，缓存中的一个对象可能会被立即丢弃、或者稍后、也可能永远不会，具体依赖于缓存的实现细节。
-</code></pre><p>@property NSUInteger totalCostLimit  </p>
-<pre><code>limits are imprecise/not strict
-来限定缓存能维持的最大内存,但totalCostLimit也不是一个严格限制
-</code></pre><p>@property BOOL evictsObjectsWithDiscardedContent;</p>
-<pre><code>是否自动清理缓存,默认是YES
-</code></pre><h2 id="存取方法介绍"><a href="#存取方法介绍" class="headerlink" title="存取方法介绍"></a>存取方法介绍</h2><pre><code>- setObject:forKey:
-- setObject:forKey:cost:
-- removeObjectForKey:
-- removeAllObjects
-</code></pre><h2 id="NSCacheDelegate"><a href="#NSCacheDelegate" class="headerlink" title="NSCacheDelegate"></a>NSCacheDelegate</h2><pre><code>- (void)cache:(NSCache *)cachewillEvictObject:(id)obj
-</code></pre><p> 缓存将要删除对象时调用，不能在此方法中修改缓存</p>
-]]></content>
+    <content type="html"><![CDATA[<p>这里写下CocoaPods</p>
+<h3 id="一-CocoaPods-安装"><a href="#一-CocoaPods-安装" class="headerlink" title="一: CocoaPods 安装"></a>一: CocoaPods 安装</h3><p>  CocoaPods的安装方式很简单,Mac下自带ruby,直接使用ruby的gem命令即可.<br>  注意:ruby的软件源eubygems.org因为使用亚马逊的云服务,所以被屏蔽掉了,需要更下下ruby的源,这里使用ruby-china提供的镜像服务(如果直接使用sudo gem install cocoapods会发现半天没反应)</p>
+<p>  1.如果gem版本太低了,可以直接升级gem</p>
+<pre><code>sudo gem update --system
+</code></pre><p>  2.移除rubygems.org</p>
+<pre><code>gem sources --remove https://rubygems.org/ 
+</code></pre><p>  3.用淘宝提供的镜像服务替换源</p>
+<pre><code>gem sources -a https://ruby.taobao.org/
+</code></pre><p>  4.安装好后可以用 <code>gem sources -l</code>检查当前SOURCES源<br>   只有在终端出现下面文字才表明是成功的</p>
+<pre><code>*** CURRENT SOURCES ***                                             
+https://ruby.taobao.org/
+</code></pre><p>  5.上面所有的命令完成时,在终端运行</p>
+<pre><code>sudo gem install -n /usr/local/bin cocoapods --pre
+</code></pre><p>  6.注意点:</p>
+<pre><code>ruby -v可以查看当前ruby版本,
+rvm list known查看目前的所有ruby版本,
+如果提示command not found 请先安装rvm,
+curl -L get.rvm.io | bash -s stable
+</code></pre><p>  7.使用CocoaPods的镜像索引<br>    所有项目的Podspec文件都托管在<a href="https://github.com/CocoaPods/Specs.第一次执行pod" target="_blank" rel="external">https://github.com/CocoaPods/Specs.第一次执行pod</a> setup时,CocoaPods会将这些Podsapce索引文件更新到本地的~/.cocoapods/路径下,这个所以文件比较大,第一次更新时非常慢.友好人士在国内的服务器建立了Cocoapods索引库的镜像,所以执行索引跟新操作时候会快很多.具体操作方法如下:</p>
+<pre><code>pod repo remove master
+git clone https://github.com/CocoaPods/Specs.git ~/.cocoapods/repos/master
+pod repo update  
+</code></pre><p>   这是使用gitcafe上的镜像,将以上代码中的 <a href="https://gitcafe.com/akuandev/Specs.git" target="_blank" rel="external">https://gitcafe.com/akuandev/Specs.git</a> 替换成 <a href="https://git.oschina.net/akuandev/Specs.git" target="_blank" rel="external">https://git.oschina.net/akuandev/Specs.git</a> 即可使用oschina上的镜像。</p>
+<h3 id="二-CocoaPods使用"><a href="#二-CocoaPods使用" class="headerlink" title="二:CocoaPods使用"></a>二:CocoaPods使用</h3><p>  1.新建项目,cd到目录下<br>  2.vim一个名为Podfile的文件,如下格式,并将以来的库添加进去</p>
+<pre><code>platform :ios,10.2
+target &apos;your project&apos; do
+pod &apos;AFNetworking&apos;, &apos;~&gt;3.0.4&apos;
+end
+</code></pre><p>  3.执行命令 <code>pod install</code><br>    现在,第三方已经下载完并且设置好了编译参数和依赖,只需要记住如下两点:<br>    3.1使用CocoaPods生成的 .xcworkspace文件来打开工程<br>    3.2每次更改了Podfile文件,都需要重新执行以下 <code>pod insatall</code> 命令 </p>
+<p>  4.如果不知道第三方库的最新版本,可以使用命令行进行查找</p>
+<pre><code>pod search AFNetworking
+</code></pre>]]></content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;NSCache-基本介绍&quot;&gt;&lt;a href=&quot;#NSCache-基本介绍&quot; class=&quot;headerlink&quot; title=&quot;NSCache 基本介绍&quot;&gt;&lt;/a&gt;NSCache 基本介绍&lt;/h1&gt;&lt;p&gt;&lt;code&gt;NSCache&lt;/code&gt;是苹果官方提供的缓存
+      &lt;p&gt;这里写下CocoaPods&lt;/p&gt;
+&lt;h3 id=&quot;一-CocoaPods-安装&quot;&gt;&lt;a href=&quot;#一-CocoaPods-安装&quot; class=&quot;headerlink&quot; title=&quot;一: CocoaPods 安装&quot;&gt;&lt;/a&gt;一: CocoaPods 安装&lt;/h3&gt;&lt;p
     
     </summary>
     
@@ -337,49 +389,37 @@ UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWit
   </entry>
   
   <entry>
-    <title>CocoaPods的安装和使用:一</title>
-    <link href="http://oneredfox.github.io/2015/04/11/%E4%BD%BF%E7%94%A8CocoaPods/"/>
-    <id>http://oneredfox.github.io/2015/04/11/使用CocoaPods/</id>
-    <published>2015-04-10T16:00:00.000Z</published>
-    <updated>2017-07-19T07:10:36.000Z</updated>
+    <title>安装Nvm</title>
+    <link href="http://oneredfox.github.io/2014/02/21/%E7%94%A8Nvm%E5%AE%89%E8%A3%85Node/"/>
+    <id>http://oneredfox.github.io/2014/02/21/用Nvm安装Node/</id>
+    <published>2014-02-21T14:55:08.000Z</published>
+    <updated>2017-07-26T08:35:40.000Z</updated>
     
-    <content type="html"><![CDATA[<p>这里写下CocoaPods</p>
-<h3 id="一-CocoaPods-安装"><a href="#一-CocoaPods-安装" class="headerlink" title="一: CocoaPods 安装"></a>一: CocoaPods 安装</h3><p>  CocoaPods的安装方式很简单,Mac下自带ruby,直接使用ruby的gem命令即可.<br>  注意:ruby的软件源eubygems.org因为使用亚马逊的云服务,所以被屏蔽掉了,需要更下下ruby的源,这里使用ruby-china提供的镜像服务(如果直接使用sudo gem install cocoapods会发现半天没反应)</p>
-<p>  1.如果gem版本太低了,可以直接升级gem</p>
-<pre><code>sudo gem update --system
-</code></pre><p>  2.移除rubygems.org</p>
-<pre><code>gem sources --remove https://rubygems.org/ 
-</code></pre><p>  3.用淘宝提供的镜像服务替换源</p>
-<pre><code>gem sources -a https://ruby.taobao.org/
-</code></pre><p>  4.安装好后可以用 <code>gem sources -l</code>检查当前SOURCES源<br>   只有在终端出现下面文字才表明是成功的</p>
-<pre><code>*** CURRENT SOURCES ***                                             
-https://ruby.taobao.org/
-</code></pre><p>  5.上面所有的命令完成时,在终端运行</p>
-<pre><code>sudo gem install -n /usr/local/bin cocoapods --pre
-</code></pre><p>  6.注意点:</p>
-<pre><code>ruby -v可以查看当前ruby版本,
-rvm list known查看目前的所有ruby版本,
-如果提示command not found 请先安装rvm,
-curl -L get.rvm.io | bash -s stable
-</code></pre><p>  7.使用CocoaPods的镜像索引<br>    所有项目的Podspec文件都托管在<a href="https://github.com/CocoaPods/Specs.第一次执行pod" target="_blank" rel="external">https://github.com/CocoaPods/Specs.第一次执行pod</a> setup时,CocoaPods会将这些Podsapce索引文件更新到本地的~/.cocoapods/路径下,这个所以文件比较大,第一次更新时非常慢.友好人士在国内的服务器建立了Cocoapods索引库的镜像,所以执行索引跟新操作时候会快很多.具体操作方法如下:</p>
-<pre><code>pod repo remove master
-git clone https://github.com/CocoaPods/Specs.git ~/.cocoapods/repos/master
-pod repo update  
-</code></pre><p>   这是使用gitcafe上的镜像,将以上代码中的 <a href="https://gitcafe.com/akuandev/Specs.git" target="_blank" rel="external">https://gitcafe.com/akuandev/Specs.git</a> 替换成 <a href="https://git.oschina.net/akuandev/Specs.git" target="_blank" rel="external">https://git.oschina.net/akuandev/Specs.git</a> 即可使用oschina上的镜像。</p>
-<h3 id="二-CocoaPods使用"><a href="#二-CocoaPods使用" class="headerlink" title="二:CocoaPods使用"></a>二:CocoaPods使用</h3><p>  1.新建项目,cd到目录下<br>  2.vim一个名为Podfile的文件,如下格式,并将以来的库添加进去</p>
-<pre><code>platform :ios,10.2
-target &apos;your project&apos; do
-pod &apos;AFNetworking&apos;, &apos;~&gt;3.0.4&apos;
-end
-</code></pre><p>  3.执行命令 <code>pod install</code><br>    现在,第三方已经下载完并且设置好了编译参数和依赖,只需要记住如下两点:<br>    3.1使用CocoaPods生成的 .xcworkspace文件来打开工程<br>    3.2每次更改了Podfile文件,都需要重新执行以下 <code>pod insatall</code> 命令 </p>
-<p>  4.如果不知道第三方库的最新版本,可以使用命令行进行查找</p>
-<pre><code>pod search AFNetworking
+    <content type="html"><![CDATA[<h2 id="一-安装HomeBrew"><a href="#一-安装HomeBrew" class="headerlink" title="一: 安装HomeBrew"></a>一: 安装HomeBrew</h2><p>打开终端,输入</p>
+<pre><code>//如果已安装HomeBrew 无需执行此行
+$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+</code></pre><h2 id="二-安装Nvm"><a href="#二-安装Nvm" class="headerlink" title="二: 安装Nvm"></a>二: 安装Nvm</h2><p><code>$ brew install nvm</code></p>
+<h2 id="三-在shell中使用nvm命令"><a href="#三-在shell中使用nvm命令" class="headerlink" title="三: 在shell中使用nvm命令"></a>三: 在shell中使用nvm命令</h2><p>2.1 首先查看是否有.bash_profile文件,没有cd到文件夹执行以下命令</p>
+<pre><code>$ vim .bash_profile
+</code></pre><p>然后输入以下命令:</p>
+<pre><code>export NVM_DIR=~/.nvm`
+source $(brew --prefix nvm)/nvm.sh
+</code></pre><p>最后重新source</p>
+<p><code>$ source .bash_profile</code></p>
+<h2 id="四-用nvm安装Node"><a href="#四-用nvm安装Node" class="headerlink" title="四: 用nvm安装Node    "></a>四: 用nvm安装Node    </h2><p>在终端输入以下命令:</p>
+<pre><code>$ nvm ls-remote  查看 所有的node可用版本
+$ nvm install xxx  下载你想要的版本
+$ nvm use xxx  使用指定版本的node 
+$ nvm alias default xxx  每次启动终端都使用该版本的node 
+</code></pre><h2 id="五-安装完成"><a href="#五-安装完成" class="headerlink" title="五: 安装完成"></a>五: 安装完成</h2><p>在终端输入以下命令:</p>
+<pre><code>$ node -v
+$ npm -v 
 </code></pre>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;这里写下CocoaPods&lt;/p&gt;
-&lt;h3 id=&quot;一-CocoaPods-安装&quot;&gt;&lt;a href=&quot;#一-CocoaPods-安装&quot; class=&quot;headerlink&quot; title=&quot;一: CocoaPods 安装&quot;&gt;&lt;/a&gt;一: CocoaPods 安装&lt;/h3&gt;&lt;p
+      &lt;h2 id=&quot;一-安装HomeBrew&quot;&gt;&lt;a href=&quot;#一-安装HomeBrew&quot; class=&quot;headerlink&quot; title=&quot;一: 安装HomeBrew&quot;&gt;&lt;/a&gt;一: 安装HomeBrew&lt;/h2&gt;&lt;p&gt;打开终端,输入&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;//如果已
     
     </summary>
     
@@ -390,19 +430,52 @@ end
   
   <entry>
     <title>刚刚搭建了个博客</title>
-    <link href="http://oneredfox.github.io/2015/04/11/%E5%88%9A%E6%90%AD%E5%BB%BA%E7%9A%84%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://oneredfox.github.io/2015/04/11/刚搭建的博客/</id>
-    <published>2015-04-10T16:00:00.000Z</published>
-    <updated>2017-07-19T07:10:00.000Z</updated>
+    <link href="http://oneredfox.github.io/2013/02/11/%E5%88%9A%E6%90%AD%E5%BB%BA%E7%9A%84%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://oneredfox.github.io/2013/02/11/刚搭建的博客/</id>
+    <published>2013-02-10T16:00:00.000Z</published>
+    <updated>2017-07-26T09:01:35.000Z</updated>
     
-    <content type="html"><![CDATA[<p>刚刚搭建了个博客,详情可以参照<a href="http://www.jianshu.com/p/4eaddcbe4d12" target="_blank" rel="external">http://www.jianshu.com/p/4eaddcbe4d12</a></p>
-<h4 id="注意"><a href="#注意" class="headerlink" title="注意:"></a>注意:</h4><p>里面的安装nvm有点问题,安装后总是提示  “command not found”,所以安装nvm和node不要按照那个,具体可以参考<a href="http://www.jianshu.com/p/a6044bd2ad35" target="_blank" rel="external">http://www.jianshu.com/p/a6044bd2ad35</a>.</p>
+    <content type="html"><![CDATA[<p>刚刚搭建了个博客,详情可以参照<a href="http://www.jianshu.com/p/4eaddcbe4d12" target="_blank" rel="external">http://www.jianshu.com/p/4eaddcbe4d12</a><br>主要分三步来搭建:</p>
+<h2 id="一-创建Github域名和控件"><a href="#一-创建Github域名和控件" class="headerlink" title="一: 创建Github域名和控件"></a>一: 创建Github域名和控件</h2><p>####1.1 注册<br>需要准备一个Github账号(不会的可以百度教程),需要注意的是username,这个名字将会是你的域名,像username.github.io.</p>
+<p>####1.2 创建仓库<br>然后仓库(repository)来存储我们的网站,点击首页任意位置出现的New repository按钮创建仓库,Respository name中的username.github.io的username一定与前面的Owner一致,username在下面会用到. </p>
+<h2 id="二-安装"><a href="#二-安装" class="headerlink" title="二: 安装"></a>二: 安装</h2><p>我们安装的是Hexo,基于Nodejs,是比较流行的博客框架,我们需要安装的工具都包括Hexo,Git,Nodejs.</p>
+<h4 id="2-1-安装Git"><a href="#2-1-安装Git" class="headerlink" title="2.1 安装Git"></a>2.1 安装Git</h4><pre><code>// 如果已安装HomeBrew 无需执行此行
+$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+$ brew install git   // 安装Git
+</code></pre><h4 id="2-2-安装Nodejs"><a href="#2-2-安装Nodejs" class="headerlink" title="2.2 安装Nodejs"></a>2.2 安装Nodejs</h4><p>先安装nvm,这是Nodejs版本管理器,可以轻松切换Nodejs版本.可以参考前面的文章:</p>
+<h4 id="2-3-安装Hexo"><a href="#2-3-安装Hexo" class="headerlink" title="2.3 安装Hexo"></a>2.3 安装Hexo</h4><p>打开终端,输入以下命令</p>
+<pre><code>$ sudo npm install hexo-cli -g
+</code></pre><p>所有工具安装完成后,就可以开始搭建博客了</p>
+<h2 id="三-搭建"><a href="#三-搭建" class="headerlink" title="三: 搭建"></a>三: 搭建</h2><p>接下来我们用Hexo初始化一个博客,然后加上自己喜欢的主题,写上第一篇文章,然后发布到自己的个人Github网站(username.github.io).</p>
+<h4 id="3-1-搭建博客"><a href="#3-1-搭建博客" class="headerlink" title="3.1 搭建博客"></a>3.1 搭建博客</h4><p>将下面的username替换成你自己的username(其实也无所谓),执行成功后,会创建出一个名为username.github.io的文件夹</p>
+<pre><code>$ hexo init username.github.io
+</code></pre><h4 id="3-2-安装主题"><a href="#3-2-安装主题" class="headerlink" title="3.2 安装主题"></a>3.2 安装主题</h4><p>作者用的是<a href="https://github.com/monniya/hexo-theme-new-vno" target="_blank" rel="external">喵神的主题</a>,<a href="https://hexo.io/themes/" target="_blank" rel="external">点击查看更多主题</a></p>
+<p>在终端输入以下命令:</p>
+<pre><code>$ cd username.github.io
+$ git clone https://github.com/iissnan/hexo-theme-next themes/next
+</code></pre><p>修改基础配置:<br>打开文件位置username.github.io/_config.yml修改几个键值对,下面把几个必须设置的列出来按需求修改,记得保存,还有注意配置的键值之间一定要有空格.<a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="external">更多设置</a></p>
+<blockquote>
+<p>title: 刘子兴的博客 //博客名字<br>description: 正在潜心修行中 //描述<br>author: 刘子兴  //作者名字<br>language: zh-Hans  //语言<br>url: <a href="http://oneredfox.github.io">http://oneredfox.github.io</a>  //git链接<br>type: git  //发布类型<br>theme: next<br>repo: <a href="https://github.com/oneredfox/oneredfox.github.io.git" target="_blank" rel="external">https://github.com/oneredfox/oneredfox.github.io.git</a> //git链接            </p>
+</blockquote>
+<h2 id="四-写文章并发布"><a href="#四-写文章并发布" class="headerlink" title="四: 写文章并发布"></a>四: 写文章并发布</h2><h4 id="4-1写文章"><a href="#4-1写文章" class="headerlink" title="4.1写文章"></a>4.1写文章</h4><p>在username.github.io/source/_posts文件夹下创建一个.md文件,(用Macdown语言写)<br>写入以下代码:</p>
+<pre><code>---
+title: 刚刚搭建了个博客
+date: 2013-02-11
+tags: 三尾
+---
+今天天气很好
+</code></pre><h4 id="4-1测试"><a href="#4-1测试" class="headerlink" title="4.1测试"></a>4.1测试</h4><pre><code>$ hexo s
+</code></pre><p>你可以在浏览器中输入<a href="https://localhost:4000" target="_blank" rel="external">https://localhost:4000</a> 访问了,访问成功就说明OK了</p>
+<h4 id="4-2hexo-deployer-git自动部署发布工具"><a href="#4-2hexo-deployer-git自动部署发布工具" class="headerlink" title="4.2hexo-deployer-git自动部署发布工具"></a>4.2hexo-deployer-git自动部署发布工具</h4><pre><code>$ npm install hexo-deployer-git --save
+</code></pre><h4 id="4-3发布"><a href="#4-3发布" class="headerlink" title="4.3发布"></a>4.3发布</h4><pre><code>$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d
+</code></pre><p>在终端cd到username.github.io文件下,</p>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意:"></a>注意:</h4><p>里面的安装nvm有点问题,安装后总是提示  “command not found”,所以安装nvm和node不要按照那个,具体可以参考<a href="http://www.jianshu.com/p/a6044bd2ad35" target="_blank" rel="external">http://www.jianshu.com/p/a6044bd2ad35</a></p>
 <p>安装的node版本:7.0</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;刚刚搭建了个博客,详情可以参照&lt;a href=&quot;http://www.jianshu.com/p/4eaddcbe4d12&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.jianshu.com/p/4eaddcbe4d12&lt;/a&gt;&lt;/
+      &lt;p&gt;刚刚搭建了个博客,详情可以参照&lt;a href=&quot;http://www.jianshu.com/p/4eaddcbe4d12&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.jianshu.com/p/4eaddcbe4d12&lt;/a&gt;&lt;b
     
     </summary>
     
