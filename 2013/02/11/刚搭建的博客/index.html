@@ -150,7 +150,42 @@
   </header>
 
   <section class="post">
-    <p>刚刚搭建了个博客,详情可以参照<a href="http://www.jianshu.com/p/" target="_blank" rel="external">http://www.jianshu.com/p/</a></p>
+    <p>刚刚搭建了个博客,详情可以参照<a href="http://www.jianshu.com/p/4eaddcbe4d12" target="_blank" rel="external">http://www.jianshu.com/p/4eaddcbe4d12</a><br>主要分三步来搭建:</p>
+<h2 id="一-创建Github域名和控件"><a href="#一-创建Github域名和控件" class="headerlink" title="一: 创建Github域名和控件"></a>一: 创建Github域名和控件</h2><p>####1.1 注册<br>需要准备一个Github账号(不会的可以百度教程),需要注意的是username,这个名字将会是你的域名,像username.github.io.</p>
+<p>####1.2 创建仓库<br>然后仓库(repository)来存储我们的网站,点击首页任意位置出现的New repository按钮创建仓库,Respository name中的username.github.io的username一定与前面的Owner一致,username在下面会用到. </p>
+<h2 id="二-安装"><a href="#二-安装" class="headerlink" title="二: 安装"></a>二: 安装</h2><p>我们安装的是Hexo,基于Nodejs,是比较流行的博客框架,我们需要安装的工具都包括Hexo,Git,Nodejs.</p>
+<h4 id="2-1-安装Git"><a href="#2-1-安装Git" class="headerlink" title="2.1 安装Git"></a>2.1 安装Git</h4><pre><code>// 如果已安装HomeBrew 无需执行此行
+$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+$ brew install git   // 安装Git
+</code></pre><h4 id="2-2-安装Nodejs"><a href="#2-2-安装Nodejs" class="headerlink" title="2.2 安装Nodejs"></a>2.2 安装Nodejs</h4><p>先安装nvm,这是Nodejs版本管理器,可以轻松切换Nodejs版本.可以参考前面的文章:</p>
+<h4 id="2-3-安装Hexo"><a href="#2-3-安装Hexo" class="headerlink" title="2.3 安装Hexo"></a>2.3 安装Hexo</h4><p>打开终端,输入以下命令</p>
+<pre><code>$ sudo npm install hexo-cli -g
+</code></pre><p>所有工具安装完成后,就可以开始搭建博客了</p>
+<h2 id="三-搭建"><a href="#三-搭建" class="headerlink" title="三: 搭建"></a>三: 搭建</h2><p>接下来我们用Hexo初始化一个博客,然后加上自己喜欢的主题,写上第一篇文章,然后发布到自己的个人Github网站(username.github.io).</p>
+<h4 id="3-1-搭建博客"><a href="#3-1-搭建博客" class="headerlink" title="3.1 搭建博客"></a>3.1 搭建博客</h4><p>将下面的username替换成你自己的username(其实也无所谓),执行成功后,会创建出一个名为username.github.io的文件夹</p>
+<pre><code>$ hexo init username.github.io
+</code></pre><h4 id="3-2-安装主题"><a href="#3-2-安装主题" class="headerlink" title="3.2 安装主题"></a>3.2 安装主题</h4><p>作者用的是<a href="https://github.com/monniya/hexo-theme-new-vno" target="_blank" rel="external">喵神的主题</a>,<a href="https://hexo.io/themes/" target="_blank" rel="external">点击查看更多主题</a></p>
+<p>在终端输入以下命令:</p>
+<pre><code>$ cd username.github.io
+$ git clone https://github.com/iissnan/hexo-theme-next themes/next
+</code></pre><p>修改基础配置:<br>打开文件位置username.github.io/_config.yml修改几个键值对,下面把几个必须设置的列出来按需求修改,记得保存,还有注意配置的键值之间一定要有空格.<a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="external">更多设置</a></p>
+<blockquote>
+<p>title: 刘子兴的博客 //博客名字<br>description: 正在潜心修行中 //描述<br>author: 刘子兴  //作者名字<br>language: zh-Hans  //语言<br>url: <a href="http://oneredfox.github.io">http://oneredfox.github.io</a>  //git链接<br>type: git  //发布类型<br>theme: next<br>repo: <a href="https://github.com/oneredfox/oneredfox.github.io.git" target="_blank" rel="external">https://github.com/oneredfox/oneredfox.github.io.git</a> //git链接            </p>
+</blockquote>
+<h2 id="四-写文章并发布"><a href="#四-写文章并发布" class="headerlink" title="四: 写文章并发布"></a>四: 写文章并发布</h2><h4 id="4-1写文章"><a href="#4-1写文章" class="headerlink" title="4.1写文章"></a>4.1写文章</h4><p>在username.github.io/source/_posts文件夹下创建一个.md文件,(用Macdown语言写)<br>写入以下代码:</p>
+<pre><code>---
+title: 刚刚搭建了个博客
+date: 2013-02-11
+tags: 三尾
+---
+今天天气很好
+</code></pre><h4 id="4-1测试"><a href="#4-1测试" class="headerlink" title="4.1测试"></a>4.1测试</h4><pre><code>$ hexo s
+</code></pre><p>你可以在浏览器中输入<a href="https://localhost:4000" target="_blank" rel="external">https://localhost:4000</a> 访问了,访问成功就说明OK了</p>
+<h4 id="4-2hexo-deployer-git自动部署发布工具"><a href="#4-2hexo-deployer-git自动部署发布工具" class="headerlink" title="4.2hexo-deployer-git自动部署发布工具"></a>4.2hexo-deployer-git自动部署发布工具</h4><pre><code>$ npm install hexo-deployer-git --save
+</code></pre><h4 id="4-3发布"><a href="#4-3发布" class="headerlink" title="4.3发布"></a>4.3发布</h4><pre><code>$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d
+</code></pre><p>在终端cd到username.github.io文件下,</p>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意:"></a>注意:</h4><p>里面的安装nvm有点问题,安装后总是提示  “command not found”,所以安装nvm和node不要按照那个,具体可以参考<a href="http://www.jianshu.com/p/a6044bd2ad35" target="_blank" rel="external">http://www.jianshu.com/p/a6044bd2ad35</a></p>
+<p>安装的node版本:7.0</p>
 
   </section>
 
