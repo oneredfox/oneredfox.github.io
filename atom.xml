@@ -88,16 +88,19 @@
     <link href="http://oneredfox.github.io/2016/04/21/NSCache/"/>
     <id>http://oneredfox.github.io/2016/04/21/NSCache/</id>
     <published>2016-04-21T14:55:08.000Z</published>
-    <updated>2017-07-27T02:20:48.000Z</updated>
+    <updated>2017-07-27T08:26:58.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="NSCache-基本介绍"><a href="#NSCache-基本介绍" class="headerlink" title="NSCache 基本介绍"></a>NSCache 基本介绍</h1><p><code>NSCache</code>是苹果官方提供的缓存类,它的用法和<code>NSMutableDictionary</code>非常类似.</p>
 <p><code>NSCache</code>是一个类似于集合的容器,即缓存.它存储key-value,这一点非常类似<code>NSDictionary</code>. 开发者一般用<code>NSCache</code>来缓存临时存储短时间但是使用创建成本高的对象,重用这些对象可以优化性能,因为他们的值不需要被重新计算.另外一方面,这些对象对于程序来说是不要紧的,在内存紧张的时候会被丢弃,如果对象被丢弃了,则下次使用的时候需要重新计算.</p>
 <p>当一个key-value对在缓存时,缓存维护它的一个强引用.存储在<code>NSCache</code>中的通用数据类型通常是实现了<code>NSDiscardableContent</code>协议的对象.在缓存中存储这类对象的好处是,当你不需要它的时候可以丢弃这些内容,以节省内存.默认情况下,缓存中的<code>NSDiscardableContent</code>对象在其内容被丢弃的时候,会被移除缓存,如果一个<code>NSDiscardableContent</code>被放进缓存，则在对象被移除时，缓存会调用<code>discardContentIfPossible</code>方法。</p>
 <p><code>NSCache</code>与可变集合的不同:   </p>
 <ol>
-<li><code>NSCache</code>类结合了各种自动删除策略，以确保不会占用过多的系统内存。如果其它应用需要内存时，系统自动执行这些策略。当调用这些策略时，会从缓存中删除一些对象，以最大限度减少内存的占用</li>
-<li><code>NSCache</code>是线程安全的，我们可以在不同的线程中添加、删除和查询缓存中的对象，而不需要锁定缓存区域</li>
-<li>不像<code>NSMutableDictionary</code>对象，一个缓存对象不会拷贝key对象</li>
+<li><p><code>NSCache</code>类结合了各种自动删除策略，以确保不会占用过多的系统内存。如果其它应用需要内存时，系统自动执行这些策略。当调用这些策略时，会从缓存中删除一些对象，以最大限度减少内存的占用  </p>
+</li>
+<li><p><code>NSCache</code>是线程安全的，我们可以在不同的线程中添加、删除和查询缓存中的对象，而不需要锁定缓存区域  </p>
+</li>
+<li><p>不像<code>NSMutableDictionary</code>对象，一个缓存对象不会拷贝key对象</p>
+</li>
 </ol>
 <h2 id="属性介绍"><a href="#属性介绍" class="headerlink" title="属性介绍"></a>属性介绍</h2><p>@property NSUInteger countLimit 缓存应持有的对象的最大数量。</p>
 <pre><code>This is not a strict limit—if the cache goes over the limit, an object in the cache could be evicted instantly, later, or possibly never, depending on the implementation details of the cache. 
@@ -148,6 +151,40 @@
     <summary type="html">
     
       &lt;p&gt;最近总是忙着忙那,好久没动过笔了&lt;br&gt;　&lt;br&gt;　&lt;strong&gt;dispatch_semaphore_create&lt;/strong&gt;,dispatch_semaphore_wait,dispatch_semaphore_signal&lt;strong&gt;在多线程中控制多线程的
+    
+    </summary>
+    
+    
+      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS开发-网络请求-NSURLSession详解</title>
+    <link href="http://oneredfox.github.io/2015/10/11/iOS%E5%BC%80%E5%8F%91-%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82-NSURLSession%E8%AF%A6%E8%A7%A3/"/>
+    <id>http://oneredfox.github.io/2015/10/11/iOS开发-网络请求-NSURLSession详解/</id>
+    <published>2015-10-10T16:00:00.000Z</published>
+    <updated>2017-07-27T08:34:57.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>　前些天刚看完网络请求这一块,那么想把自己所学到的一些东西呢分享一下,同时也希望如果有错误的地方还请一定不要吝啬指教!!!</p>
+<p>　iOS网络请求大致也就两类:</p>
+<p>　NSURLConntet:是2003年伴随着Safari一起发行的网络开发API，距今已经有十一年,不过现在已经被NSURLSession取代了.</p>
+<p>　NSURLSession:现在主流的网络请求方式,她提供了配置会话缓存.协议.cookie和证书能力.这使得网络架构和应用程序可以独立工作、互不干扰。另外，NSURLSession另一个重要的部分是会话任务，它负责加载数据，在客户端和服务器端进行文件的上传下载.<br>　<br>　<img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/V.JBFRZezS1NbPZliELVodBqNhvv00hgmZqQH0Dlc3g!/b/dB4BAAAAAAAA&amp;bo=kgTQAZIE0AEDCSw!&amp;rf=viewer_4" alt="1.1"><br>　<br>　如图,是NSURLSession的三个任务,数据获取(NSURLSessionData),文件上传(NSURLSessionUploadTask),文件下载(NSURLSessionDownloadTask),这三个类都是NSURLSessionTask这个抽象类的子类，相比直接使用NSURLConnection,NSURLSessionTask支持任务的暂停、取消和恢复，并且默认任务运行在其他非主线程中.</p>
+<p>　好了,下面直接上代码用来说明.首先是数据请求:1.2<br>　<br><img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/*CtoKUa4od7Xda6g*LTzPfi99Z.l8CwYorJ9uo66GOU!/b/dPcAAAAAAAAA&amp;bo=2ASfA9gEnwMDACU!&amp;rf=viewer_4" alt="1.2">  </p>
+<p>　好了,其实上传文件和获取数据的话可以直接使用AFNetworking,他是一个非常受欢迎的轻量级的iOS、Mac OS X网络通信类库。它建立在NSURLConnection、NSOperation,NSURLSession以及其技术的基础上，有着精心设计的模块结构和功能丰富的API，让很多网络通信功能的实现变得十分简单。<a href="http://www.cnblogs.com/kenshincui/p/4042190.html#NSURLSession" target="_blank" rel="external">如果有兴趣了解如何自己实现上传文件的话可以看下这篇文章,上面讲的很详细</a>. 这篇文章终点讨论如何下载文件(视频,音频以及图片),不多说,直接上代码.<br>　<br><img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/NxLO3jqj2M4awI8e3PE*RRPrstcwfE1YDVLXdTgVVec!/b/dAEBAAAAAAAA&amp;bo=2ARuA9gEbgMDACU!&amp;rf=viewer_4" alt="1.3"><br><img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/Pva9oDbiCtL5JO3Pczd*tlQL40IpxFmlvoW9zGp4KSc!/b/dLMAAAAAAAAA&amp;bo=2AQrAdgEKwEDACU!&amp;rf=viewer_4" alt="1.4">  </p>
+<p>　NSURLSession支持进程三种会话：</p>
+<p>　defaultSessionConfiguration：进程内会话（默认会话），用硬盘来缓存数据。</p>
+<p>　ephemeralSessionConfiguration：返回一个预设配置，没有持久性存储的缓存，Cookie或证书。这对于实现像秘密浏览功能的功能来说，是很理想的(不会将cookie、缓存储存到本地，只会放到内存中，当应用程序退出后数据也会消失)</p>
+<p>　backgroundSessionConfiguration：独特之处在于，它会创建一个后台会话。后台会话不同于常规的，普通的会话，它甚至可以在应用程序挂起，退出，崩溃的情况下运行上传和下载任务。初始化时指定的标识符，被用于向任何可能在进程外恢复后台传输的守护进程提供上下文<br>　<br><a href="https://github.com/oneredfox/hpptDemo" target="_blank" rel="external">github地址</a>  
+　  
+　  </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;　前些天刚看完网络请求这一块,那么想把自己所学到的一些东西呢分享一下,同时也希望如果有错误的地方还请一定不要吝啬指教!!!&lt;/p&gt;
+&lt;p&gt;　iOS网络请求大致也就两类:&lt;/p&gt;
+&lt;p&gt;　NSURLConntet:是2003年伴随着Safari一起发行的网络开发API，距今已
     
     </summary>
     
@@ -364,30 +401,181 @@ UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWit
   </entry>
   
   <entry>
+    <title>iOS-动画总结-一</title>
+    <link href="http://oneredfox.github.io/2014/10/11/iOS-%E5%8A%A8%E7%94%BB%E6%80%BB%E7%BB%93-%E4%B8%80/"/>
+    <id>http://oneredfox.github.io/2014/10/11/iOS-动画总结-一/</id>
+    <published>2014-10-10T16:00:00.000Z</published>
+    <updated>2017-07-27T09:07:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>　一.动画的分类(这篇文章只讨论基于核心动画,其他的动画暂不讨论)<br>　<br>　1.<strong>CAAnimation</strong>,核心类的动画,他是一个抽象类,不能直接拿来使用,遵循<strong>CAMediaTiming</strong>协议和<strong>CAAction</strong>协议,先看看他都有那些property(CAMediaTiming,CAAction)吧.</p>
+<pre><code>@property CFTimeInterval beginTime:开始时间
+
+@property CFTimeInterval duration:动画执行的时间
+
+@property float speed:默认的值为1.0,代表着动画会按照默认的速度播放(给定的时间),假如设置为2.0,则设定的时间会减半(假如Duration:6,Speed:2,则动画就会播放6/2的时间)
+
+@property CFTimeInterval timeOffset:对时间进行偏移,从而计算出动画的状态,动画在执行的时候(timeOffset = Duration &gt; timeOffset?timeOffset:(Duration % timeOffset)),会先跳过timeOffset这个时间段,先执行后面的部分,然后在执行
+
+timeOffset.例如:Duration = 3,timeOffset = 2,则先执行后两秒的动画,然后才执行timeOffset的动画,如图1.1:  
+</code></pre><p>　<br>　<img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/xRzJO8qxXZrbuOIb01xhr*6fv9o*FhtX.CC.ZRLul0k!/b/dAEBAAAAAAAA&amp;bo=fAJ8AHwCfAACGDw!&amp;rf=viewer_4" alt="1.1"><br>　<br>　timeOffset使用的不多,他可以和speed共同使用来控制当前动画的时间.当speed == 0时,这动画会在这个时间点(timeOffset)停止(通常用于动画的暂停),如图1.2:<br>　<br>　<img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/jt6P7G1G1yTqvB42.GxpwwERjz6Szm.X4mkWf1.gdPM!/c/dPcAAAAAAAAA&amp;bo=SAJQAUgCUAECGDw!&amp;rf=viewer_4" alt="1.2"><br>　<br>　代码如图1.3:<br>　<br>　<img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/g4BhsxvqaPa0iDLTnDB93Af7o3loMRoQLIwYPbnq6Rs!/b/dPcAAAAAAAAA&amp;bo=2ASAAdgEgAEDACU!&amp;rf=viewer_4" alt="1.3"><br>　<br>　<strong>speed</strong> == 0,则意味着会在<strong>timeOffset</strong>这个时间点停止.  </p>
+<pre><code> @property float repeatCount:动画重复多少次,不应该和repeatDuration一起使用,可以设置为无限执行:MAXFLOAT.
+
+@property BOOL repeatDuration:动画重复多久,不应该和RepeatCount一起使用.
+
+@property BOOL autoreverses:是否逆行动画
+
+ @property(getter=isRemovedOnCompletion) BOOL removedOnCompletion;这个值为true时,动画会在执行完毕后自动的从层上面移除,一般设置为NO(再次使用)
+
+@property(nullable, strong) CAMediaTimingFunction *timingFunction:设置动画的节奏,比如:先快后慢,先慢后快等.
+
+@property(retain) id delegate:为CAAnimation设置代理。默认为nil。注意：一个CAAnimation实例，不能设置delegate为self。会引起循环引用。
+
+@property(copy) NSString *fillMode:决定着当前对象过了非active时间段的行为.比如:动画执行完毕或者动画开始之前.(removedOnCompletion设置为fause,否则不会生效)  
+</code></pre><p>　fillModel有四个值:  </p>
+<p>　<em> CA_EXTERN NSString </em> const kCAFillModeForwards 动画结束后会一直保持结束后的状态</p>
+<p>　<em> CA_EXTERN NSString </em> const kCAFillModeBackwards 和kCAFillModeForwards相对,也就是说当你将动画加入layer的时候,layer便会处于动画初始的状态(及时延迟执行也一样会处于初始的状态)</p>
+<p>　<em> CA_EXTERN NSString </em> const kCAFillModeBoth 动画开始前layer处于动画开始状态,结束后layer处于动画结束状态</p>
+<p>　<em> CA_EXTERN NSString </em> const kCAFillModeRemoved 默认值,就是说动画开始前和结束后对当前layer都没有影响,layer会恢复到原始状态</p>
+<p>　另外:她还有一些自身的方法:</p>
+<pre><code>+ (instancetype)animation;
+
++ (nullable id)defaultValueForKey:(NSString *)key;根据属性key，返回相应的属性值
+
+- (BOOL)shouldArchiveValueForKey:(NSString *)key;返回指定的属性是否可以归档
+
+- (void)animationDidStart:(CAAnimation *)anim;动画开始时,执行的方法
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag;动画执行完成执行的方法
+</code></pre><p>　我们一般都使用CAAnimation的派生类:如图2.1所示:<br>　<br>　<img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/*M9UDiDqSSEMmJlzUbVPMqMZoT.thlNfL8x*YI0*W5E!/b/dPcAAAAAAAAA&amp;bo=2AQnA9gEJwMDACU!&amp;rf=viewer_4" alt="2.1"><br>　<br>　2.1 <strong>CATransition</strong> 提供渐变效果,(例如:推,拉,翻页,等等)</p>
+<p>　2.2 <strong>CABasicAnimation</strong> 提供了对单一动画的实现</p>
+<p>　2.3 <strong>CAKeyframeAnimation</strong> 关键帧动画</p>
+<p>　2.4 <strong>CAAnimationGroup</strong> 允许多个动画同时播放</p>
+<p>　然后一一来介绍他们:</p>
+<p>　2.1.1 <strong>CATransition</strong>:首先还是属性介绍:</p>
+<pre><code>@property float startProgress;设置过渡开始点,必须&lt;=endProgress,
+
+@property float endProgress;设置过度的结束点,必须&gt;=startProgress;
+
+@property(nullable, strong) id filter; (还没有搞懂他的用法);
+
+@property(nullable, copy) NSString *subtype;设置预定义的过度方向如果设置了filter,则该属性无效　　
+</code></pre><p> 预定义的过度方向:</p>
+<ul>
+<li><p>CA_EXTERN NSString * const kCATransitionFromRight  从右边         </p>
+</li>
+<li><p>CA_EXTERN NSString * const kCATransitionFromLeft      从左边</p>
+</li>
+<li><p>CA_EXTERN NSString * const kCATransitionFromTop      从顶部</p>
+</li>
+<li><p>CA_EXTERN NSString * const kCATransitionFromBottom 从底部  </p>
+</li>
+</ul>
+<p><code>@property(copy) NSString *type;设置预定义的效果,默认为kCATransitionFade,如果设置了filter,则该属性无效</code> </p>
+<p>　下面是type各种动画效果  ‘fade’,’moveIn’, ‘push’ , ‘reveal’ 可以分别使用’kCATransitionFade’, ‘kCATransitionMoveIn’, ‘kCATransitionPush’, ‘kCATransitionReveal’来调用.</p>
+<ul>
+<li><p>@”cube”        立方体翻滚效果</p>
+</li>
+<li><p>@”moveIn”        新视图移到旧视图上面</p>
+</li>
+<li><p>@”reveal”        显露效果(将旧视图移开,显示下面的新视图)</p>
+</li>
+</ul>
+<ul>
+<li><p>@”fade”         交叉淡化过渡(不支持过渡方向)            (默认为此效果)</p>
+</li>
+<li><p>@”pageCurl”        向上翻一页</p>
+</li>
+<li><p>@”pageUnCurl”        向下翻一页</p>
+</li>
+<li><p>@”suckEffect”        收缩效果，类似系统最小化窗口时的神奇效果(不支持过渡方向)</p>
+</li>
+<li><p>@”rippleEffect”        滴水效果,(不支持过渡方向)</p>
+</li>
+<li><p>@”oglFlip”        上下左右翻转效果</p>
+</li>
+<li><p>@”rotate”        旋转效果</p>
+</li>
+<li><p>@”push”</p>
+</li>
+<li><p>@”cameraIrisHollowOpen”        相机镜头打开效果(不支持过渡方向)</p>
+</li>
+<li><p>@”cameraIrisHollowClose”    相机镜头关上效果(不支持过渡方向)</p>
+<p> 此时subType为上面的那些,</p>
+<p> 当type为@”rotate”(旋转)的时候,它也有几个对应的subtype,分别为:</p>
+</li>
+<li><p>90cw    逆时针旋转90°</p>
+</li>
+<li><p>90ccw  顺时针旋转90°</p>
+</li>
+<li><p>180cw  逆时针旋转180°</p>
+</li>
+<li><p>180ccw  顺时针旋转180°</p>
+<p> type和subType的对应关系 (匹配错误则无法显示动画)</p>
+<p> 图2.1.1是所列出的效果  </p>
+<p> <img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/TYNbX8QmyuM9t2SmFzN2nH2RPatR4HZ5BbGpEBN**YI!/c/dB8BAAAAAAAA&amp;bo=2gCEAdoAhAECGDw!&amp;rf=viewer_4" alt="2.1.1"> </p>
+</li>
+</ul>
+<pre><code>[demol](https://github.com/oneredfox/Animation-Demo)  
+
+[参考资料](http://www.cnblogs.com/kenshincui/p/3972100.html)
+</code></pre><p>　  
+　  
+　</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;　一.动画的分类(这篇文章只讨论基于核心动画,其他的动画暂不讨论)&lt;br&gt;　&lt;br&gt;　1.&lt;strong&gt;CAAnimation&lt;/strong&gt;,核心类的动画,他是一个抽象类,不能直接拿来使用,遵循&lt;strong&gt;CAMediaTiming&lt;/strong&gt;协议和&lt;str
+    
+    </summary>
+    
+    
+      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
+    
+  </entry>
+  
+  <entry>
     <title>NS_OPTIONS与NS_ENUM的区别</title>
     <link href="http://oneredfox.github.io/2014/07/20/NS_OPTIONS%E4%B8%8ENS_ENUM%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
     <id>http://oneredfox.github.io/2014/07/20/NS_OPTIONS与NS_ENUM的区别/</id>
     <published>2014-07-20T14:55:08.000Z</published>
-    <updated>2017-07-27T02:20:27.000Z</updated>
+    <updated>2017-07-27T08:26:18.000Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="NS-OPTIONS"><a href="#NS-OPTIONS" class="headerlink" title="NS_OPTIONS"></a>NS_OPTIONS</h3><pre><code>typedef NS_OPTIONS(NSUInteger, SDWebImageOptions) { 
-    SDWebImageRetryFailed = 1 &lt;&lt; 0, //值为2的0次方
-    SDWebImageLowPriority = 1 &lt;&lt; 1, //值为2的1次方 
-    SDWebImageCacheMemoryOnly = 1 &lt;&lt; 2, //值为2的2次方 
-    SDWebImageProgressiveDownload = 1 &lt;&lt; 3, //值为2的3次方     
-    SDWebImageRefreshCached = 1 &lt;&lt; 4 //值为2的4次方 
+    <content type="html"><![CDATA[<h3 id="NS-OPTIONS"><a href="#NS-OPTIONS" class="headerlink" title="NS_OPTIONS"></a>NS_OPTIONS</h3><pre><code>typedef NS_OPTIONS(NSUInteger, SDWebImageOptions) {  
+
+    SDWebImageRetryFailed = 1 &lt;&lt; 0, //值为2的0次方  
+
+    SDWebImageLowPriority = 1 &lt;&lt; 1, //值为2的1次方  
+
+    SDWebImageCacheMemoryOnly = 1 &lt;&lt; 2, //值为2的2次方  
+
+    SDWebImageProgressiveDownload = 1 &lt;&lt; 3, //值为2的3次方  
+
+    SDWebImageRefreshCached = 1 &lt;&lt; 4 //值为2的4次方  
+
 };
 </code></pre><blockquote>
 <p>小括号中第一个为NSUInteger这个为固定值，第二个为枚举名字(自己定义),大括号中枚举项必须全部包含小括号的枚举类型，枚举项后面再跟上几个值的区别，这里枚举项是NSUInteger类型</p>
 </blockquote>
-<h3 id="NS-ENUM"><a href="#NS-ENUM" class="headerlink" title="NS_ENUM"></a>NS_ENUM</h3><pre><code>typedef NS_ENUM(NSInteger, SDWebImageOptions {
-     SDWebImageRetryFailed = 0, //值为0            SDWebImageLowPriority = 1, //值为1        SDWebImageCacheMemoryOnly = 2 //值为2       
+<h3 id="NS-ENUM"><a href="#NS-ENUM" class="headerlink" title="NS_ENUM"></a>NS_ENUM</h3><pre><code>typedef NS_ENUM(NSInteger, SDWebImageOptions {  
+
+     SDWebImageRetryFailed = 0, //值为0
+
+     SDWebImageLowPriority = 1, //值为1 
+
+     SDWebImageCacheMemoryOnly = 2 //值为2       
 };
 </code></pre><blockquote>
 <p>小括号中第一个为NSInteger这个为固定值，第二个为枚举名称(自己定义)，大括号中枚举项必须包含小括号中自己定义的枚举类型，枚举项自己加后缀以视区别，大括号中的枚举项的值可自定义，若是定义了枚举项其中一项的值后面依次在它的前一项的值上加1，如这样：</p>
 </blockquote>
 <pre><code>typedef NS_ENUM(NSInteger, SDWebImageOptions) {
-    SDWebImageRetryFailed = 0, //值为0            SDWebImageLowPriority, //值为1             SDWebImageCacheMemoryOnly //值为2      
+
+    SDWebImageRetryFailed = 0, //值为0 
+
+    SDWebImageLowPriority, //值为1  
+
+    SDWebImageCacheMemoryOnly //值为2  
+
  }; 
 </code></pre><p>//或者这样 </p>
 <pre><code>typedef NS_ENUM(NSInteger,SDWebImageOptions) {
@@ -395,9 +583,14 @@ UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWit
 };
 </code></pre><p>//若是都不定义值，默认第一项为0，后面依次枚举项的值加1。</p>
 <p>当然也可以下方这样写枚举，但是官方不推荐:</p>
-<pre><code>typedef enum { 
-    SDWebImageRetryFailed = 0,                 SDWebImageLowPriority = 1,
+<pre><code>typedef enum {
+
+    SDWebImageRetryFailed = 0,  
+
+    SDWebImageLowPriority = 1,  
+
      SDWebImageCacheMemoryOnly = 2  
+
 } SDWebImageOptions;
 </code></pre><h3 id="NS-ENUM与NS-OPTIONS的区别"><a href="#NS-ENUM与NS-OPTIONS的区别" class="headerlink" title="NS_ENUM与NS_OPTIONS的区别"></a>NS_ENUM与NS_OPTIONS的区别</h3><ul>
 <li><p>NS_ENUM枚举项的值为NSInteger，NS_OPTIONS枚举项的值为NSUInteger;</p>
@@ -409,12 +602,14 @@ UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWit
 <blockquote>
 <p>位移枚举即是在你需要的地方可以同时存在多个枚举值如这样：</p>
 </blockquote>
-<pre><code>UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] init];
+<pre><code>UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] init];  
+
 swipeGR.direction = UISwipeGestureRecognizerDirectionDown | UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight;
 </code></pre><blockquote>
 <p>而NS_ENUM定义的枚举不能几个枚举项同时存在，只能选择其中一项，像这样：</p>
 </blockquote>
-<pre><code>   UITextField *textfiled =[[UITextField alloc]init];
+<pre><code>   UITextField *textfiled =[[UITextField alloc]init];  
+
 textfiled.keyboardType = UIKeyboardTypeDefault;
 </code></pre></li>
 <li><p>NS_OPTIONS的枚举项的值需要像这样表示1 &lt;&lt; 0，1 &lt;&lt; 1，2的几次方这样，而NS_ENUM可以直接给像1，2，3这样。</p>
@@ -531,11 +726,11 @@ $ npm -v
     <link href="http://oneredfox.github.io/2014/02/11/%E5%88%9A%E6%90%AD%E5%BB%BA%E7%9A%84%E5%8D%9A%E5%AE%A2/"/>
     <id>http://oneredfox.github.io/2014/02/11/刚搭建的博客/</id>
     <published>2014-02-10T16:00:00.000Z</published>
-    <updated>2017-07-27T02:15:44.000Z</updated>
+    <updated>2017-07-27T08:22:56.000Z</updated>
     
-    <content type="html"><![CDATA[<p>刚刚搭建了个博客,样式入下图,主要分三步来搭建:</p>
-<p><img src="http://r.photo.store.qq.com/psb?/V11CFKUe0ogDzM/BMMMWCJK.M7b2Z8WVt*o*xVg4AAxvicKCWBkdeiIIEM!/r/dLMAAAAAAAAA" alt="作者的blog截图"> </p>
-<h2 id="一-创建Github域名和控件"><a href="#一-创建Github域名和控件" class="headerlink" title="一: 创建Github域名和控件"></a>一: 创建Github域名和控件</h2><h4 id="1-1-注册"><a href="#1-1-注册" class="headerlink" title="1.1 注册"></a>1.1 注册</h4><p>需要准备一个Github账号(不会的可以百度教程),需要注意的是username,这个名字将会是你的域名,比如:username.github.io.</p>
+    <content type="html"><![CDATA[<p>刚刚搭建了个博客,样式入下图,主要分三步来搭建:  </p>
+<p><img src="http://r.photo.store.qq.com/psb?/V11CFKUe0ogDzM/BMMMWCJK.M7b2Z8WVt*o*xVg4AAxvicKCWBkdeiIIEM!/r/dLMAAAAAAAAA" alt="作者的blog截图">  </p>
+<h2 id="一-创建Github域名和控件"><a href="#一-创建Github域名和控件" class="headerlink" title="一: 创建Github域名和控件  "></a>一: 创建Github域名和控件  </h2><h4 id="1-1-注册"><a href="#1-1-注册" class="headerlink" title="1.1 注册"></a>1.1 注册</h4><p>需要准备一个Github账号(不会的可以百度教程),需要注意的是username,这个名字将会是你的域名,比如:username.github.io.</p>
 <h4 id="1-2-创建仓库"><a href="#1-2-创建仓库" class="headerlink" title="1.2 创建仓库"></a>1.2 创建仓库</h4><p>然后创建仓库(repository)来存储我们的网站,点击首页任意位置出现的 New repository 按钮创建仓库,Respository name中的username.github.io的username一定与前面的一致,username在下面会用到. </p>
 <h2 id="二-安装"><a href="#二-安装" class="headerlink" title="二: 安装"></a>二: 安装</h2><p>我们安装的是Hexo,基于Nodejs,是比较流行的博客框架,我们需要安装的工具都包括Hexo,Git,Nodejs.</p>
 <h4 id="2-1-安装HomeBrew"><a href="#2-1-安装HomeBrew" class="headerlink" title="2.1 安装HomeBrew"></a>2.1 安装HomeBrew</h4><p><a href="https://oneredfox.github.io/2014/02/21/%E7%94%A8Nvm%E5%AE%89%E8%A3%85Node/">可以参考作者的另一篇文章</a></p>
@@ -573,8 +768,8 @@ tags: 三尾
     
     <summary type="html">
     
-      &lt;p&gt;刚刚搭建了个博客,样式入下图,主要分三步来搭建:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://r.photo.store.qq.com/psb?/V11CFKUe0ogDzM/BMMMWCJK.M7b2Z8WVt*o*xVg4AAxvicKCWBkdeiIIEM!/r/
+      &lt;p&gt;刚刚搭建了个博客,样式入下图,主要分三步来搭建:  &lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://r.photo.store.qq.com/psb?/V11CFKUe0ogDzM/BMMMWCJK.M7b2Z8WVt*o*xVg4AAxvicKCWBkdeiIIEM!/
     
     </summary>
     

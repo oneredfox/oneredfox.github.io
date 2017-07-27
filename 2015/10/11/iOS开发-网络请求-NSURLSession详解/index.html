@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>CocoaPods的安装和使用:一 | 刘子兴的博客</title>
+    <title>iOS开发-网络请求-NSURLSession详解 | 刘子兴的博客</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="最近比较懒...">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="CocoaPods的安装和使用:一 | 刘子兴的博客">
+    <meta name="twitter:title" content="iOS开发-网络请求-NSURLSession详解 | 刘子兴的博客">
     <meta name="twitter:description" content="最近比较懒...">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="CocoaPods的安装和使用:一 | 刘子兴的博客">
+    <meta property="og:title" content="iOS开发-网络请求-NSURLSession详解 | 刘子兴的博客">
     <meta property="og:description" content="最近比较懒...">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="刘子兴的博客" href="/atom.xml">
     
 
-    <link rel="canonical" href="http://oneredfox.github.io/2014/06/11/使用CocoaPods/"/>
+    <link rel="canonical" href="http://oneredfox.github.io/2015/10/11/iOS开发-网络请求-NSURLSession详解/"/>
 
                  
 </head>
@@ -138,7 +138,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2014-06-10T16:00:00.000Z" class="post-list__meta--date date">2014-06-11</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+      <time datetime="2015-10-10T16:00:00.000Z" class="post-list__meta--date date">2015-10-11</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
   <a class="tag-link" href="/tags/三尾/">三尾</a>
  </span>
       <span class="page-pv">
@@ -146,42 +146,23 @@
       </span> 
    
     </div>
-    <h1 class="post-title">CocoaPods的安装和使用:一</h1>
+    <h1 class="post-title">iOS开发-网络请求-NSURLSession详解</h1>
   </header>
 
   <section class="post">
-    <p>这里写下CocoaPods</p>
-<h3 id="一-CocoaPods-安装"><a href="#一-CocoaPods-安装" class="headerlink" title="一: CocoaPods 安装"></a>一: CocoaPods 安装</h3><p>  CocoaPods的安装方式很简单,Mac下自带ruby,直接使用ruby的gem命令即可.<br>  注意:ruby的软件源eubygems.org因为使用亚马逊的云服务,所以被屏蔽掉了,需要更下下ruby的源,这里使用ruby-china提供的镜像服务(如果直接使用sudo gem install cocoapods会发现半天没反应)</p>
-<p>  1.如果gem版本太低了,可以直接升级gem</p>
-<pre><code>sudo gem update --system
-</code></pre><p>  2.移除rubygems.org</p>
-<pre><code>gem sources --remove https://rubygems.org/ 
-</code></pre><p>  3.用淘宝提供的镜像服务替换源</p>
-<pre><code>gem sources -a https://ruby.taobao.org/
-</code></pre><p>  4.安装好后可以用 <code>gem sources -l</code>检查当前SOURCES源<br>   只有在终端出现下面文字才表明是成功的</p>
-<pre><code>*** CURRENT SOURCES ***                                             
-https://ruby.taobao.org/
-</code></pre><p>  5.上面所有的命令完成时,在终端运行</p>
-<pre><code>sudo gem install -n /usr/local/bin cocoapods --pre
-</code></pre><p>  6.注意点:</p>
-<pre><code>ruby -v可以查看当前ruby版本,
-rvm list known查看目前的所有ruby版本,
-如果提示command not found 请先安装rvm,
-curl -L get.rvm.io | bash -s stable
-</code></pre><p>  7.使用CocoaPods的镜像索引<br>    所有项目的Podspec文件都托管在<a href="https://github.com/CocoaPods/Specs.第一次执行pod" target="_blank" rel="external">https://github.com/CocoaPods/Specs.第一次执行pod</a> setup时,CocoaPods会将这些Podsapce索引文件更新到本地的~/.cocoapods/路径下,这个所以文件比较大,第一次更新时非常慢.友好人士在国内的服务器建立了Cocoapods索引库的镜像,所以执行索引跟新操作时候会快很多.具体操作方法如下:</p>
-<pre><code>pod repo remove master
-git clone https://github.com/CocoaPods/Specs.git ~/.cocoapods/repos/master
-pod repo update  
-</code></pre><p>   这是使用gitcafe上的镜像,将以上代码中的 <a href="https://gitcafe.com/akuandev/Specs.git" target="_blank" rel="external">https://gitcafe.com/akuandev/Specs.git</a> 替换成 <a href="https://git.oschina.net/akuandev/Specs.git" target="_blank" rel="external">https://git.oschina.net/akuandev/Specs.git</a> 即可使用oschina上的镜像。</p>
-<h3 id="二-CocoaPods使用"><a href="#二-CocoaPods使用" class="headerlink" title="二:CocoaPods使用"></a>二:CocoaPods使用</h3><p>  1.新建项目,cd到目录下<br>  2.vim一个名为Podfile的文件,如下格式,并将以来的库添加进去</p>
-<pre><code>platform :ios,10.2
-target &apos;your project&apos; do
-pod &apos;AFNetworking&apos;, &apos;~&gt;3.0.4&apos;
-end
-</code></pre><p>  3.执行命令 <code>pod install</code><br>    现在,第三方已经下载完并且设置好了编译参数和依赖,只需要记住如下两点:<br>    3.1使用CocoaPods生成的 .xcworkspace文件来打开工程<br>    3.2每次更改了Podfile文件,都需要重新执行以下 <code>pod insatall</code> 命令 </p>
-<p>  4.如果不知道第三方库的最新版本,可以使用命令行进行查找</p>
-<pre><code>pod search AFNetworking
-</code></pre>
+    <p>　前些天刚看完网络请求这一块,那么想把自己所学到的一些东西呢分享一下,同时也希望如果有错误的地方还请一定不要吝啬指教!!!</p>
+<p>　iOS网络请求大致也就两类:</p>
+<p>　NSURLConntet:是2003年伴随着Safari一起发行的网络开发API，距今已经有十一年,不过现在已经被NSURLSession取代了.</p>
+<p>　NSURLSession:现在主流的网络请求方式,她提供了配置会话缓存.协议.cookie和证书能力.这使得网络架构和应用程序可以独立工作、互不干扰。另外，NSURLSession另一个重要的部分是会话任务，它负责加载数据，在客户端和服务器端进行文件的上传下载.<br>　<br>　<img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/V.JBFRZezS1NbPZliELVodBqNhvv00hgmZqQH0Dlc3g!/b/dB4BAAAAAAAA&amp;bo=kgTQAZIE0AEDCSw!&amp;rf=viewer_4" alt="1.1"><br>　<br>　如图,是NSURLSession的三个任务,数据获取(NSURLSessionData),文件上传(NSURLSessionUploadTask),文件下载(NSURLSessionDownloadTask),这三个类都是NSURLSessionTask这个抽象类的子类，相比直接使用NSURLConnection,NSURLSessionTask支持任务的暂停、取消和恢复，并且默认任务运行在其他非主线程中.</p>
+<p>　好了,下面直接上代码用来说明.首先是数据请求:1.2<br>　<br><img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/*CtoKUa4od7Xda6g*LTzPfi99Z.l8CwYorJ9uo66GOU!/b/dPcAAAAAAAAA&amp;bo=2ASfA9gEnwMDACU!&amp;rf=viewer_4" alt="1.2">  </p>
+<p>　好了,其实上传文件和获取数据的话可以直接使用AFNetworking,他是一个非常受欢迎的轻量级的iOS、Mac OS X网络通信类库。它建立在NSURLConnection、NSOperation,NSURLSession以及其技术的基础上，有着精心设计的模块结构和功能丰富的API，让很多网络通信功能的实现变得十分简单。<a href="http://www.cnblogs.com/kenshincui/p/4042190.html#NSURLSession" target="_blank" rel="external">如果有兴趣了解如何自己实现上传文件的话可以看下这篇文章,上面讲的很详细</a>. 这篇文章终点讨论如何下载文件(视频,音频以及图片),不多说,直接上代码.<br>　<br><img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/NxLO3jqj2M4awI8e3PE*RRPrstcwfE1YDVLXdTgVVec!/b/dAEBAAAAAAAA&amp;bo=2ARuA9gEbgMDACU!&amp;rf=viewer_4" alt="1.3"><br><img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/Pva9oDbiCtL5JO3Pczd*tlQL40IpxFmlvoW9zGp4KSc!/b/dLMAAAAAAAAA&amp;bo=2AQrAdgEKwEDACU!&amp;rf=viewer_4" alt="1.4">  </p>
+<p>　NSURLSession支持进程三种会话：</p>
+<p>　defaultSessionConfiguration：进程内会话（默认会话），用硬盘来缓存数据。</p>
+<p>　ephemeralSessionConfiguration：返回一个预设配置，没有持久性存储的缓存，Cookie或证书。这对于实现像秘密浏览功能的功能来说，是很理想的(不会将cookie、缓存储存到本地，只会放到内存中，当应用程序退出后数据也会消失)</p>
+<p>　backgroundSessionConfiguration：独特之处在于，它会创建一个后台会话。后台会话不同于常规的，普通的会话，它甚至可以在应用程序挂起，退出，崩溃的情况下运行上传和下载任务。初始化时指定的标识符，被用于向任何可能在进程外恢复后台传输的守护进程提供上下文<br>　<br><a href="https://github.com/oneredfox/hpptDemo" target="_blank" rel="external">github地址</a>  
+　  
+　  </p>
+
   </section>
 
 </article>
@@ -192,17 +173,16 @@ end
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2014/02/21/用Nvm安装Node/" title="通过Nvm安装Node">通过Nvm安装Node</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2015/04/20/日常总结/" title="日常总结">日常总结</a></h2>
                 <p class="excerpt">
                 
-                一: 安装HomeBrew打开终端,输入
-//如果已安装HomeBrew 无需执行此行
-$ /usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;q
+                一:我们有时候需要将一个Core Foundation对象转换成一个Objective-C对象,这个时候我们需要告诉编译器,转换过程中引用计数如何调整,这时候就引入了与bridge相关的关键字,
+__bridge:只做类型转换,不修改相关对象的引用技术,原来的Core Foundation对象在不用
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2014-02-21T14:55:08.000Z" class="post-list__meta--date date">2014-02-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+                <div class="post-list__meta"><time datetime="2015-04-20T14:55:08.000Z" class="post-list__meta--date date">2015-04-20</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/三尾/">三尾</a>
-</span><a class="btn-border-small" href="/2014/02/21/用Nvm安装Node/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2015/04/20/日常总结/">继续阅读</a></div>
                            
             </div>
         
@@ -210,19 +190,17 @@ $ /usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Home
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2014/07/20/NS_OPTIONS与NS_ENUM的区别/" title="NS_OPTIONS与NS_ENUM的区别">NS_OPTIONS与NS_ENUM的区别</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2016/04/11/iOS-多线程-GCD-二/" title="iOS-多线程-GCD-二">iOS-多线程-GCD-二</a></h2>
                 <p class="excerpt">
                 
-                NS_OPTIONStypedef NS_OPTIONS(NSUInteger, SDWebImageOptions) {  
-
-    SDWebImageRetryFailed = 1 &amp;lt;&amp;lt; 0, //值为2的0次方  
-
-    SDWebImageLowPriority = 1 
+                最近总是忙着忙那,好久没动过笔了　　dispatch_semaphore_create,dispatch_semaphore_wait,dispatch_semaphore_signal在多线程中控制多线程的并发数目,也可以达到线程锁的功效,先大致的说下他们每个的作用.  
+　    
+　dispa
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2014-07-20T14:55:08.000Z" class="post-list__meta--date date">2014-07-20</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+                <div class="post-list__meta"><time datetime="2016-04-10T16:00:00.000Z" class="post-list__meta--date date">2016-04-11</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/三尾/">三尾</a>
-</span><a class="btn-border-small" href="/2014/07/20/NS_OPTIONS与NS_ENUM的区别/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2016/04/11/iOS-多线程-GCD-二/">继续阅读</a></div>
                        
             </div>
         

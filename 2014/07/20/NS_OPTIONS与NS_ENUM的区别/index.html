@@ -150,24 +150,41 @@
   </header>
 
   <section class="post">
-    <h3 id="NS-OPTIONS"><a href="#NS-OPTIONS" class="headerlink" title="NS_OPTIONS"></a>NS_OPTIONS</h3><pre><code>typedef NS_OPTIONS(NSUInteger, SDWebImageOptions) { 
-    SDWebImageRetryFailed = 1 &lt;&lt; 0, //值为2的0次方
-    SDWebImageLowPriority = 1 &lt;&lt; 1, //值为2的1次方 
-    SDWebImageCacheMemoryOnly = 1 &lt;&lt; 2, //值为2的2次方 
-    SDWebImageProgressiveDownload = 1 &lt;&lt; 3, //值为2的3次方     
-    SDWebImageRefreshCached = 1 &lt;&lt; 4 //值为2的4次方 
+    <h3 id="NS-OPTIONS"><a href="#NS-OPTIONS" class="headerlink" title="NS_OPTIONS"></a>NS_OPTIONS</h3><pre><code>typedef NS_OPTIONS(NSUInteger, SDWebImageOptions) {  
+
+    SDWebImageRetryFailed = 1 &lt;&lt; 0, //值为2的0次方  
+
+    SDWebImageLowPriority = 1 &lt;&lt; 1, //值为2的1次方  
+
+    SDWebImageCacheMemoryOnly = 1 &lt;&lt; 2, //值为2的2次方  
+
+    SDWebImageProgressiveDownload = 1 &lt;&lt; 3, //值为2的3次方  
+
+    SDWebImageRefreshCached = 1 &lt;&lt; 4 //值为2的4次方  
+
 };
 </code></pre><blockquote>
 <p>小括号中第一个为NSUInteger这个为固定值，第二个为枚举名字(自己定义),大括号中枚举项必须全部包含小括号的枚举类型，枚举项后面再跟上几个值的区别，这里枚举项是NSUInteger类型</p>
 </blockquote>
-<h3 id="NS-ENUM"><a href="#NS-ENUM" class="headerlink" title="NS_ENUM"></a>NS_ENUM</h3><pre><code>typedef NS_ENUM(NSInteger, SDWebImageOptions {
-     SDWebImageRetryFailed = 0, //值为0            SDWebImageLowPriority = 1, //值为1        SDWebImageCacheMemoryOnly = 2 //值为2       
+<h3 id="NS-ENUM"><a href="#NS-ENUM" class="headerlink" title="NS_ENUM"></a>NS_ENUM</h3><pre><code>typedef NS_ENUM(NSInteger, SDWebImageOptions {  
+
+     SDWebImageRetryFailed = 0, //值为0
+
+     SDWebImageLowPriority = 1, //值为1 
+
+     SDWebImageCacheMemoryOnly = 2 //值为2       
 };
 </code></pre><blockquote>
 <p>小括号中第一个为NSInteger这个为固定值，第二个为枚举名称(自己定义)，大括号中枚举项必须包含小括号中自己定义的枚举类型，枚举项自己加后缀以视区别，大括号中的枚举项的值可自定义，若是定义了枚举项其中一项的值后面依次在它的前一项的值上加1，如这样：</p>
 </blockquote>
 <pre><code>typedef NS_ENUM(NSInteger, SDWebImageOptions) {
-    SDWebImageRetryFailed = 0, //值为0            SDWebImageLowPriority, //值为1             SDWebImageCacheMemoryOnly //值为2      
+
+    SDWebImageRetryFailed = 0, //值为0 
+
+    SDWebImageLowPriority, //值为1  
+
+    SDWebImageCacheMemoryOnly //值为2  
+
  }; 
 </code></pre><p>//或者这样 </p>
 <pre><code>typedef NS_ENUM(NSInteger,SDWebImageOptions) {
@@ -175,9 +192,14 @@
 };
 </code></pre><p>//若是都不定义值，默认第一项为0，后面依次枚举项的值加1。</p>
 <p>当然也可以下方这样写枚举，但是官方不推荐:</p>
-<pre><code>typedef enum { 
-    SDWebImageRetryFailed = 0,                 SDWebImageLowPriority = 1,
+<pre><code>typedef enum {
+
+    SDWebImageRetryFailed = 0,  
+
+    SDWebImageLowPriority = 1,  
+
      SDWebImageCacheMemoryOnly = 2  
+
 } SDWebImageOptions;
 </code></pre><h3 id="NS-ENUM与NS-OPTIONS的区别"><a href="#NS-ENUM与NS-OPTIONS的区别" class="headerlink" title="NS_ENUM与NS_OPTIONS的区别"></a>NS_ENUM与NS_OPTIONS的区别</h3><ul>
 <li><p>NS_ENUM枚举项的值为NSInteger，NS_OPTIONS枚举项的值为NSUInteger;</p>
@@ -189,12 +211,14 @@
 <blockquote>
 <p>位移枚举即是在你需要的地方可以同时存在多个枚举值如这样：</p>
 </blockquote>
-<pre><code>UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] init];
+<pre><code>UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] init];  
+
 swipeGR.direction = UISwipeGestureRecognizerDirectionDown | UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight;
 </code></pre><blockquote>
 <p>而NS_ENUM定义的枚举不能几个枚举项同时存在，只能选择其中一项，像这样：</p>
 </blockquote>
-<pre><code>   UITextField *textfiled =[[UITextField alloc]init];
+<pre><code>   UITextField *textfiled =[[UITextField alloc]init];  
+
 textfiled.keyboardType = UIKeyboardTypeDefault;
 </code></pre></li>
 <li><p>NS_OPTIONS的枚举项的值需要像这样表示1 &lt;&lt; 0，1 &lt;&lt; 1，2的几次方这样，而NS_ENUM可以直接给像1，2，3这样。</p>
@@ -229,16 +253,16 @@ textfiled.keyboardType = UIKeyboardTypeDefault;
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2015/04/20/日常总结/" title="日常总结">日常总结</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2014/10/11/iOS-动画总结-一/" title="iOS-动画总结-一">iOS-动画总结-一</a></h2>
                 <p class="excerpt">
                 
-                一:我们有时候需要将一个Core Foundation对象转换成一个Objective-C对象,这个时候我们需要告诉编译器,转换过程中引用计数如何调整,这时候就引入了与bridge相关的关键字,
-__bridge:只做类型转换,不修改相关对象的引用技术,原来的Core Foundation对象在不用
+                　一.动画的分类(这篇文章只讨论基于核心动画,其他的动画暂不讨论)　　1.CAAnimation,核心类的动画,他是一个抽象类,不能直接拿来使用,遵循CAMediaTiming协议和CAAction协议,先看看他都有那些property(CAMediaTiming,CAAction)吧.
+@prop
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2015-04-20T14:55:08.000Z" class="post-list__meta--date date">2015-04-20</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+                <div class="post-list__meta"><time datetime="2014-10-10T16:00:00.000Z" class="post-list__meta--date date">2014-10-11</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/三尾/">三尾</a>
-</span><a class="btn-border-small" href="/2015/04/20/日常总结/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2014/10/11/iOS-动画总结-一/">继续阅读</a></div>
                        
             </div>
         
