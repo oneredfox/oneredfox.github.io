@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>NS_OPTIONS与NS_ENUM的区别 | 刘子兴的博客</title>
+    <title>CocoaPods的安装和使用:一 | 刘子兴的博客</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="最近比较懒...">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="NS_OPTIONS与NS_ENUM的区别 | 刘子兴的博客">
+    <meta name="twitter:title" content="CocoaPods的安装和使用:一 | 刘子兴的博客">
     <meta name="twitter:description" content="最近比较懒...">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="NS_OPTIONS与NS_ENUM的区别 | 刘子兴的博客">
+    <meta property="og:title" content="CocoaPods的安装和使用:一 | 刘子兴的博客">
     <meta property="og:description" content="最近比较懒...">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="刘子兴的博客" href="/atom.xml">
     
 
-    <link rel="canonical" href="http://oneredfox.github.io/2015/07/20/NS_OPTIONS与NS_ENUM的区别/"/>
+    <link rel="canonical" href="http://oneredfox.github.io/2014/06/11/使用CocoaPods/"/>
 
                  
 </head>
@@ -138,7 +138,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2015-07-20T14:55:08.000Z" class="post-list__meta--date date">2015-07-20</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+      <time datetime="2014-06-10T16:00:00.000Z" class="post-list__meta--date date">2014-06-11</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
   <a class="tag-link" href="/tags/三尾/">三尾</a>
  </span>
       <span class="page-pv">
@@ -146,62 +146,42 @@
       </span> 
    
     </div>
-    <h1 class="post-title">NS_OPTIONS与NS_ENUM的区别</h1>
+    <h1 class="post-title">CocoaPods的安装和使用:一</h1>
   </header>
 
   <section class="post">
-    <h3 id="NS-OPTIONS"><a href="#NS-OPTIONS" class="headerlink" title="NS_OPTIONS"></a>NS_OPTIONS</h3><pre><code>typedef NS_OPTIONS(NSUInteger, SDWebImageOptions) { 
-    SDWebImageRetryFailed = 1 &lt;&lt; 0, //值为2的0次方
-    SDWebImageLowPriority = 1 &lt;&lt; 1, //值为2的1次方 
-    SDWebImageCacheMemoryOnly = 1 &lt;&lt; 2, //值为2的2次方 
-    SDWebImageProgressiveDownload = 1 &lt;&lt; 3, //值为2的3次方     
-    SDWebImageRefreshCached = 1 &lt;&lt; 4 //值为2的4次方 
-};
-</code></pre><blockquote>
-<p>小括号中第一个为NSUInteger这个为固定值，第二个为枚举名字(自己定义),大括号中枚举项必须全部包含小括号的枚举类型，枚举项后面再跟上几个值的区别，这里枚举项是NSUInteger类型</p>
-</blockquote>
-<h3 id="NS-ENUM"><a href="#NS-ENUM" class="headerlink" title="NS_ENUM"></a>NS_ENUM</h3><pre><code>typedef NS_ENUM(NSInteger, SDWebImageOptions {
-     SDWebImageRetryFailed = 0, //值为0            SDWebImageLowPriority = 1, //值为1        SDWebImageCacheMemoryOnly = 2 //值为2       
-};
-</code></pre><blockquote>
-<p>小括号中第一个为NSInteger这个为固定值，第二个为枚举名称(自己定义)，大括号中枚举项必须包含小括号中自己定义的枚举类型，枚举项自己加后缀以视区别，大括号中的枚举项的值可自定义，若是定义了枚举项其中一项的值后面依次在它的前一项的值上加1，如这样：</p>
-</blockquote>
-<pre><code>typedef NS_ENUM(NSInteger, SDWebImageOptions) {
-    SDWebImageRetryFailed = 0, //值为0            SDWebImageLowPriority, //值为1             SDWebImageCacheMemoryOnly //值为2      
- }; 
-</code></pre><p>//或者这样 </p>
-<pre><code>typedef NS_ENUM(NSInteger,SDWebImageOptions) {
-    SDWebImageRetryFailed = 0, //值为0            SDWebImageLowPriority = 2, //值为2         SDWebImageCacheMemoryOnly //值为3    
-};
-</code></pre><p>//若是都不定义值，默认第一项为0，后面依次枚举项的值加1。</p>
-<p>当然也可以下方这样写枚举，但是官方不推荐:</p>
-<pre><code>typedef enum { 
-    SDWebImageRetryFailed = 0,                 SDWebImageLowPriority = 1,
-     SDWebImageCacheMemoryOnly = 2  
-} SDWebImageOptions;
-</code></pre><h3 id="NS-ENUM与NS-OPTIONS的区别"><a href="#NS-ENUM与NS-OPTIONS的区别" class="headerlink" title="NS_ENUM与NS_OPTIONS的区别"></a>NS_ENUM与NS_OPTIONS的区别</h3><ul>
-<li><p>NS_ENUM枚举项的值为NSInteger，NS_OPTIONS枚举项的值为NSUInteger;</p>
-<blockquote>
-<p>这里为什么NS_ENUM用NSInteger，NS_OPTIONS用NSUInteger看后  面总结</p>
-</blockquote>
-</li>
-<li><p>NS_ENUM定义通用枚举，NS_OPTIONS定义位移枚举</p>
-<blockquote>
-<p>位移枚举即是在你需要的地方可以同时存在多个枚举值如这样：</p>
-</blockquote>
-<pre><code>UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] init];
-swipeGR.direction = UISwipeGestureRecognizerDirectionDown | UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight;
-</code></pre><blockquote>
-<p>而NS_ENUM定义的枚举不能几个枚举项同时存在，只能选择其中一项，像这样：</p>
-</blockquote>
-<pre><code>   UITextField *textfiled =[[UITextField alloc]init];
-textfiled.keyboardType = UIKeyboardTypeDefault;
-</code></pre></li>
-<li><p>NS_OPTIONS的枚举项的值需要像这样表示1 &lt;&lt; 0，1 &lt;&lt; 1，2的几次方这样，而NS_ENUM可以直接给像1，2，3这样。</p>
-</li>
-</ul>
-<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>  这里为什么会出现NS_OPTIONS与NS_ENUM且为什么不直接一个就行，且枚举值可多选。因为有个是否将代码按照C++模式编译，若是不按照C++模式编译，NS_OPTIONS与NS_ENUM展开方式就一样，若是要按照C++模式编译，就不同了。在使用或运算操作两个枚举值时，C++默认为运算结果的数据类型是枚举的底层数据类型即NSUInteger,且C++不允许它隐式转换为枚举类型本身，所以C++模式下定义了NS_OPTIONS宏以保证不出现类型转换。<br>到了这我们就知道了只要枚举值需要用到按位或（2个及以上枚举值可多个存在）就使用NS_OPTIONS，否则使用NS_ENUM。</p>
-
+    <p>这里写下CocoaPods</p>
+<h3 id="一-CocoaPods-安装"><a href="#一-CocoaPods-安装" class="headerlink" title="一: CocoaPods 安装"></a>一: CocoaPods 安装</h3><p>  CocoaPods的安装方式很简单,Mac下自带ruby,直接使用ruby的gem命令即可.<br>  注意:ruby的软件源eubygems.org因为使用亚马逊的云服务,所以被屏蔽掉了,需要更下下ruby的源,这里使用ruby-china提供的镜像服务(如果直接使用sudo gem install cocoapods会发现半天没反应)</p>
+<p>  1.如果gem版本太低了,可以直接升级gem</p>
+<pre><code>sudo gem update --system
+</code></pre><p>  2.移除rubygems.org</p>
+<pre><code>gem sources --remove https://rubygems.org/ 
+</code></pre><p>  3.用淘宝提供的镜像服务替换源</p>
+<pre><code>gem sources -a https://ruby.taobao.org/
+</code></pre><p>  4.安装好后可以用 <code>gem sources -l</code>检查当前SOURCES源<br>   只有在终端出现下面文字才表明是成功的</p>
+<pre><code>*** CURRENT SOURCES ***                                             
+https://ruby.taobao.org/
+</code></pre><p>  5.上面所有的命令完成时,在终端运行</p>
+<pre><code>sudo gem install -n /usr/local/bin cocoapods --pre
+</code></pre><p>  6.注意点:</p>
+<pre><code>ruby -v可以查看当前ruby版本,
+rvm list known查看目前的所有ruby版本,
+如果提示command not found 请先安装rvm,
+curl -L get.rvm.io | bash -s stable
+</code></pre><p>  7.使用CocoaPods的镜像索引<br>    所有项目的Podspec文件都托管在<a href="https://github.com/CocoaPods/Specs.第一次执行pod" target="_blank" rel="external">https://github.com/CocoaPods/Specs.第一次执行pod</a> setup时,CocoaPods会将这些Podsapce索引文件更新到本地的~/.cocoapods/路径下,这个所以文件比较大,第一次更新时非常慢.友好人士在国内的服务器建立了Cocoapods索引库的镜像,所以执行索引跟新操作时候会快很多.具体操作方法如下:</p>
+<pre><code>pod repo remove master
+git clone https://github.com/CocoaPods/Specs.git ~/.cocoapods/repos/master
+pod repo update  
+</code></pre><p>   这是使用gitcafe上的镜像,将以上代码中的 <a href="https://gitcafe.com/akuandev/Specs.git" target="_blank" rel="external">https://gitcafe.com/akuandev/Specs.git</a> 替换成 <a href="https://git.oschina.net/akuandev/Specs.git" target="_blank" rel="external">https://git.oschina.net/akuandev/Specs.git</a> 即可使用oschina上的镜像。</p>
+<h3 id="二-CocoaPods使用"><a href="#二-CocoaPods使用" class="headerlink" title="二:CocoaPods使用"></a>二:CocoaPods使用</h3><p>  1.新建项目,cd到目录下<br>  2.vim一个名为Podfile的文件,如下格式,并将以来的库添加进去</p>
+<pre><code>platform :ios,10.2
+target &apos;your project&apos; do
+pod &apos;AFNetworking&apos;, &apos;~&gt;3.0.4&apos;
+end
+</code></pre><p>  3.执行命令 <code>pod install</code><br>    现在,第三方已经下载完并且设置好了编译参数和依赖,只需要记住如下两点:<br>    3.1使用CocoaPods生成的 .xcworkspace文件来打开工程<br>    3.2每次更改了Podfile文件,都需要重新执行以下 <code>pod insatall</code> 命令 </p>
+<p>  4.如果不知道第三方库的最新版本,可以使用命令行进行查找</p>
+<pre><code>pod search AFNetworking
+</code></pre>
   </section>
 
 </article>
@@ -212,16 +192,17 @@ textfiled.keyboardType = UIKeyboardTypeDefault;
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2015/06/11/使用CocoaPods/" title="CocoaPods的安装和使用:一">CocoaPods的安装和使用:一</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2014/02/21/用Nvm安装Node/" title="通过Nvm安装Node">通过Nvm安装Node</a></h2>
                 <p class="excerpt">
                 
-                这里写下CocoaPods
-一: CocoaPods 安装  CocoaPods的安装方式很简单,Mac下自带ruby,直接使用ruby的gem命令即可.  注意:ruby的软件源eubygems.org因为使用亚马逊的云服务,所以被屏蔽掉了,需要更下下ruby的源,这里使用ruby-china提供
+                一: 安装HomeBrew打开终端,输入
+//如果已安装HomeBrew 无需执行此行
+$ /usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;q
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2015-06-10T16:00:00.000Z" class="post-list__meta--date date">2015-06-11</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+                <div class="post-list__meta"><time datetime="2014-02-21T14:55:08.000Z" class="post-list__meta--date date">2014-02-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/三尾/">三尾</a>
-</span><a class="btn-border-small" href="/2015/06/11/使用CocoaPods/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2014/02/21/用Nvm安装Node/">继续阅读</a></div>
                            
             </div>
         
@@ -229,16 +210,17 @@ textfiled.keyboardType = UIKeyboardTypeDefault;
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2016/04/21/NSCache/" title="NSCache">NSCache</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2014/07/20/NS_OPTIONS与NS_ENUM的区别/" title="NS_OPTIONS与NS_ENUM的区别">NS_OPTIONS与NS_ENUM的区别</a></h2>
                 <p class="excerpt">
                 
-                NSCache 基本介绍NSCache是苹果官方提供的缓存类,它的用法和NSMutableDictionary非常类似.
-NSCache是一个类似于集合的容器,即缓存.它存储key-value,这一点非常类似NSDictionary. 开发者一般用NSCache来缓存临时存储短时间但是使用创建成本高
+                NS_OPTIONStypedef NS_OPTIONS(NSUInteger, SDWebImageOptions) { 
+    SDWebImageRetryFailed = 1 &amp;lt;&amp;lt; 0, //值为2的0次方
+    SDWebImageLowPriority = 1 &amp;lt;&amp;
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2016-04-21T14:55:08.000Z" class="post-list__meta--date date">2016-04-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+                <div class="post-list__meta"><time datetime="2014-07-20T14:55:08.000Z" class="post-list__meta--date date">2014-07-20</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/三尾/">三尾</a>
-</span><a class="btn-border-small" href="/2016/04/21/NSCache/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2014/07/20/NS_OPTIONS与NS_ENUM的区别/">继续阅读</a></div>
                        
             </div>
         

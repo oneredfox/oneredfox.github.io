@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://oneredfox.github.io/"/>
-  <updated>2017-07-26T08:04:42.000Z</updated>
+  <updated>2017-07-27T02:20:48.000Z</updated>
   <id>http://oneredfox.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://oneredfox.github.io/2016/04/21/NSCache/"/>
     <id>http://oneredfox.github.io/2016/04/21/NSCache/</id>
     <published>2016-04-21T14:55:08.000Z</published>
-    <updated>2017-07-26T08:04:42.000Z</updated>
+    <updated>2017-07-27T02:20:48.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="NSCache-基本介绍"><a href="#NSCache-基本介绍" class="headerlink" title="NSCache 基本介绍"></a>NSCache 基本介绍</h1><p><code>NSCache</code>是苹果官方提供的缓存类,它的用法和<code>NSMutableDictionary</code>非常类似.</p>
 <p><code>NSCache</code>是一个类似于集合的容器,即缓存.它存储key-value,这一点非常类似<code>NSDictionary</code>. 开发者一般用<code>NSCache</code>来缓存临时存储短时间但是使用创建成本高的对象,重用这些对象可以优化性能,因为他们的值不需要被重新计算.另外一方面,这些对象对于程序来说是不要紧的,在内存紧张的时候会被丢弃,如果对象被丢弃了,则下次使用的时候需要重新计算.</p>
@@ -50,129 +50,6 @@
     <summary type="html">
     
       &lt;h1 id=&quot;NSCache-基本介绍&quot;&gt;&lt;a href=&quot;#NSCache-基本介绍&quot; class=&quot;headerlink&quot; title=&quot;NSCache 基本介绍&quot;&gt;&lt;/a&gt;NSCache 基本介绍&lt;/h1&gt;&lt;p&gt;&lt;code&gt;NSCache&lt;/code&gt;是苹果官方提供的缓存
-    
-    </summary>
-    
-    
-      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>NS_OPTIONS与NS_ENUM的区别</title>
-    <link href="http://oneredfox.github.io/2015/07/20/NS_OPTIONS%E4%B8%8ENS_ENUM%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
-    <id>http://oneredfox.github.io/2015/07/20/NS_OPTIONS与NS_ENUM的区别/</id>
-    <published>2015-07-20T14:55:08.000Z</published>
-    <updated>2017-07-19T07:47:42.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="NS-OPTIONS"><a href="#NS-OPTIONS" class="headerlink" title="NS_OPTIONS"></a>NS_OPTIONS</h3><pre><code>typedef NS_OPTIONS(NSUInteger, SDWebImageOptions) { 
-    SDWebImageRetryFailed = 1 &lt;&lt; 0, //值为2的0次方
-    SDWebImageLowPriority = 1 &lt;&lt; 1, //值为2的1次方 
-    SDWebImageCacheMemoryOnly = 1 &lt;&lt; 2, //值为2的2次方 
-    SDWebImageProgressiveDownload = 1 &lt;&lt; 3, //值为2的3次方     
-    SDWebImageRefreshCached = 1 &lt;&lt; 4 //值为2的4次方 
-};
-</code></pre><blockquote>
-<p>小括号中第一个为NSUInteger这个为固定值，第二个为枚举名字(自己定义),大括号中枚举项必须全部包含小括号的枚举类型，枚举项后面再跟上几个值的区别，这里枚举项是NSUInteger类型</p>
-</blockquote>
-<h3 id="NS-ENUM"><a href="#NS-ENUM" class="headerlink" title="NS_ENUM"></a>NS_ENUM</h3><pre><code>typedef NS_ENUM(NSInteger, SDWebImageOptions {
-     SDWebImageRetryFailed = 0, //值为0            SDWebImageLowPriority = 1, //值为1        SDWebImageCacheMemoryOnly = 2 //值为2       
-};
-</code></pre><blockquote>
-<p>小括号中第一个为NSInteger这个为固定值，第二个为枚举名称(自己定义)，大括号中枚举项必须包含小括号中自己定义的枚举类型，枚举项自己加后缀以视区别，大括号中的枚举项的值可自定义，若是定义了枚举项其中一项的值后面依次在它的前一项的值上加1，如这样：</p>
-</blockquote>
-<pre><code>typedef NS_ENUM(NSInteger, SDWebImageOptions) {
-    SDWebImageRetryFailed = 0, //值为0            SDWebImageLowPriority, //值为1             SDWebImageCacheMemoryOnly //值为2      
- }; 
-</code></pre><p>//或者这样 </p>
-<pre><code>typedef NS_ENUM(NSInteger,SDWebImageOptions) {
-    SDWebImageRetryFailed = 0, //值为0            SDWebImageLowPriority = 2, //值为2         SDWebImageCacheMemoryOnly //值为3    
-};
-</code></pre><p>//若是都不定义值，默认第一项为0，后面依次枚举项的值加1。</p>
-<p>当然也可以下方这样写枚举，但是官方不推荐:</p>
-<pre><code>typedef enum { 
-    SDWebImageRetryFailed = 0,                 SDWebImageLowPriority = 1,
-     SDWebImageCacheMemoryOnly = 2  
-} SDWebImageOptions;
-</code></pre><h3 id="NS-ENUM与NS-OPTIONS的区别"><a href="#NS-ENUM与NS-OPTIONS的区别" class="headerlink" title="NS_ENUM与NS_OPTIONS的区别"></a>NS_ENUM与NS_OPTIONS的区别</h3><ul>
-<li><p>NS_ENUM枚举项的值为NSInteger，NS_OPTIONS枚举项的值为NSUInteger;</p>
-<blockquote>
-<p>这里为什么NS_ENUM用NSInteger，NS_OPTIONS用NSUInteger看后  面总结</p>
-</blockquote>
-</li>
-<li><p>NS_ENUM定义通用枚举，NS_OPTIONS定义位移枚举</p>
-<blockquote>
-<p>位移枚举即是在你需要的地方可以同时存在多个枚举值如这样：</p>
-</blockquote>
-<pre><code>UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] init];
-swipeGR.direction = UISwipeGestureRecognizerDirectionDown | UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight;
-</code></pre><blockquote>
-<p>而NS_ENUM定义的枚举不能几个枚举项同时存在，只能选择其中一项，像这样：</p>
-</blockquote>
-<pre><code>   UITextField *textfiled =[[UITextField alloc]init];
-textfiled.keyboardType = UIKeyboardTypeDefault;
-</code></pre></li>
-<li><p>NS_OPTIONS的枚举项的值需要像这样表示1 &lt;&lt; 0，1 &lt;&lt; 1，2的几次方这样，而NS_ENUM可以直接给像1，2，3这样。</p>
-</li>
-</ul>
-<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>  这里为什么会出现NS_OPTIONS与NS_ENUM且为什么不直接一个就行，且枚举值可多选。因为有个是否将代码按照C++模式编译，若是不按照C++模式编译，NS_OPTIONS与NS_ENUM展开方式就一样，若是要按照C++模式编译，就不同了。在使用或运算操作两个枚举值时，C++默认为运算结果的数据类型是枚举的底层数据类型即NSUInteger,且C++不允许它隐式转换为枚举类型本身，所以C++模式下定义了NS_OPTIONS宏以保证不出现类型转换。<br>到了这我们就知道了只要枚举值需要用到按位或（2个及以上枚举值可多个存在）就使用NS_OPTIONS，否则使用NS_ENUM。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;NS-OPTIONS&quot;&gt;&lt;a href=&quot;#NS-OPTIONS&quot; class=&quot;headerlink&quot; title=&quot;NS_OPTIONS&quot;&gt;&lt;/a&gt;NS_OPTIONS&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;typedef NS_OPTIONS(NSUInteger,
-    
-    </summary>
-    
-    
-      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CocoaPods的安装和使用:一</title>
-    <link href="http://oneredfox.github.io/2015/06/11/%E4%BD%BF%E7%94%A8CocoaPods/"/>
-    <id>http://oneredfox.github.io/2015/06/11/使用CocoaPods/</id>
-    <published>2015-06-10T16:00:00.000Z</published>
-    <updated>2017-07-26T08:04:20.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>这里写下CocoaPods</p>
-<h3 id="一-CocoaPods-安装"><a href="#一-CocoaPods-安装" class="headerlink" title="一: CocoaPods 安装"></a>一: CocoaPods 安装</h3><p>  CocoaPods的安装方式很简单,Mac下自带ruby,直接使用ruby的gem命令即可.<br>  注意:ruby的软件源eubygems.org因为使用亚马逊的云服务,所以被屏蔽掉了,需要更下下ruby的源,这里使用ruby-china提供的镜像服务(如果直接使用sudo gem install cocoapods会发现半天没反应)</p>
-<p>  1.如果gem版本太低了,可以直接升级gem</p>
-<pre><code>sudo gem update --system
-</code></pre><p>  2.移除rubygems.org</p>
-<pre><code>gem sources --remove https://rubygems.org/ 
-</code></pre><p>  3.用淘宝提供的镜像服务替换源</p>
-<pre><code>gem sources -a https://ruby.taobao.org/
-</code></pre><p>  4.安装好后可以用 <code>gem sources -l</code>检查当前SOURCES源<br>   只有在终端出现下面文字才表明是成功的</p>
-<pre><code>*** CURRENT SOURCES ***                                             
-https://ruby.taobao.org/
-</code></pre><p>  5.上面所有的命令完成时,在终端运行</p>
-<pre><code>sudo gem install -n /usr/local/bin cocoapods --pre
-</code></pre><p>  6.注意点:</p>
-<pre><code>ruby -v可以查看当前ruby版本,
-rvm list known查看目前的所有ruby版本,
-如果提示command not found 请先安装rvm,
-curl -L get.rvm.io | bash -s stable
-</code></pre><p>  7.使用CocoaPods的镜像索引<br>    所有项目的Podspec文件都托管在<a href="https://github.com/CocoaPods/Specs.第一次执行pod" target="_blank" rel="external">https://github.com/CocoaPods/Specs.第一次执行pod</a> setup时,CocoaPods会将这些Podsapce索引文件更新到本地的~/.cocoapods/路径下,这个所以文件比较大,第一次更新时非常慢.友好人士在国内的服务器建立了Cocoapods索引库的镜像,所以执行索引跟新操作时候会快很多.具体操作方法如下:</p>
-<pre><code>pod repo remove master
-git clone https://github.com/CocoaPods/Specs.git ~/.cocoapods/repos/master
-pod repo update  
-</code></pre><p>   这是使用gitcafe上的镜像,将以上代码中的 <a href="https://gitcafe.com/akuandev/Specs.git" target="_blank" rel="external">https://gitcafe.com/akuandev/Specs.git</a> 替换成 <a href="https://git.oschina.net/akuandev/Specs.git" target="_blank" rel="external">https://git.oschina.net/akuandev/Specs.git</a> 即可使用oschina上的镜像。</p>
-<h3 id="二-CocoaPods使用"><a href="#二-CocoaPods使用" class="headerlink" title="二:CocoaPods使用"></a>二:CocoaPods使用</h3><p>  1.新建项目,cd到目录下<br>  2.vim一个名为Podfile的文件,如下格式,并将以来的库添加进去</p>
-<pre><code>platform :ios,10.2
-target &apos;your project&apos; do
-pod &apos;AFNetworking&apos;, &apos;~&gt;3.0.4&apos;
-end
-</code></pre><p>  3.执行命令 <code>pod install</code><br>    现在,第三方已经下载完并且设置好了编译参数和依赖,只需要记住如下两点:<br>    3.1使用CocoaPods生成的 .xcworkspace文件来打开工程<br>    3.2每次更改了Podfile文件,都需要重新执行以下 <code>pod insatall</code> 命令 </p>
-<p>  4.如果不知道第三方库的最新版本,可以使用命令行进行查找</p>
-<pre><code>pod search AFNetworking
-</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这里写下CocoaPods&lt;/p&gt;
-&lt;h3 id=&quot;一-CocoaPods-安装&quot;&gt;&lt;a href=&quot;#一-CocoaPods-安装&quot; class=&quot;headerlink&quot; title=&quot;一: CocoaPods 安装&quot;&gt;&lt;/a&gt;一: CocoaPods 安装&lt;/h3&gt;&lt;p
     
     </summary>
     
@@ -380,6 +257,196 @@ UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWit
     <summary type="html">
     
       &lt;h3 id=&quot;一-我们有时候需要将一个Core-Foundation对象转换成一个Objective-C对象-这个时候我们需要告诉编译器-转换过程中引用计数如何调整-这时候就引入了与bridge相关的关键字&quot;&gt;&lt;a href=&quot;#一-我们有时候需要将一个Core-Foundat
+    
+    </summary>
+    
+    
+      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS开发-多线程-GCD</title>
+    <link href="http://oneredfox.github.io/2014/08/11/iOS%E5%BC%80%E5%8F%91-%E5%A4%9A%E7%BA%BF%E7%A8%8B-GCD-%E4%B8%80/"/>
+    <id>http://oneredfox.github.io/2014/08/11/iOS开发-多线程-GCD-一/</id>
+    <published>2014-08-10T16:00:00.000Z</published>
+    <updated>2017-07-27T08:00:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>　身为开发者的我们,总是会面临着各种各样的需求.必不可少的一个硬性规则:从用户体验的角度来开发项目!那么这就要求我们必须减少用户在使用程序中所需要等待的时间,看吧,多线程的概念出来了.</p>
+<p>　我们经常在敲代码的时候边敲边听音乐,看看,这就是一个多线程的体现了(如果敲代码的时候不能进行其他的操作,我们会怎么想?).通过一张图我们来看一下实现进程的必要性吧.<br>　<br><img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/qQt*SHh0le4hVRTdaXOI7qDPn1116hxI.shNE5nPBPE!/b/dPcAAAAAAAAA&amp;bo=EASAAgAAAAADALM!&amp;rf=viewer_4" alt="进程的必要性"></p>
+<p>　在iOS中,每启动一个进程都会创建一个主线程(一般用于刷新UI),这个线程是其他线程的父线程.由于在iOS中,除了主线程,其他的线程都是独立于Cocoa Touch的,所以只有主线程可以更新UI(不过现在好像其他线程也可能会成功,但是不推荐).常用的多线程开发主要有三种:<br>　<br>　1. <strong>NSThread</strong><br>　<br>　2. <strong>NSOperation</strong><br>　<br>　3. <strong>GCD</strong></p>
+<p>　这三种是随着iOS的发展逐渐引进来的,所以靠后的使用相对来说越简单,而且GCD也是Apple官方主推荐的.在这里我们也只讨论GCD.<br>　<br>　GCD全称(Grand Central Dispatch),他是基于在C语言上的,抽象成都很高,使用也非常的简单.先说下GCD的优点吧.</p>
+<p>　1. GCD是Apple官方为多核并发提供的解决方案<br>　<br>　2. GCD会自动利用CPU内核(不需要我们关心)<br>　<br>　3. GCD会自动管理线程的生命周期(不用我们手动管理)<br>　<br>　4. 总的来说就是我们只需要告诉GCD我们要执行什么任务,其他的都不用我们管理</p>
+<p>注意:GCD是纯C语言的,我们在用GCD的时候,面对的是函数,而不是方法.</p>
+<p> GCD中有两个核心的概念:</p>
+<p>　1. <strong>任务</strong>(我们要执行什么样的操作)<br> 　<br>　2. <strong>队列</strong>(专门用于存放任务的)</p>
+<p>　我们将任务添加到队列中,GCD会自动的将队列里的任务取出,放到对应的线程执行(FIFO).这几乎不用我们关心.<br>　<br>　GCD的任务分为两种:<br>　<br>　1. <strong>同步执行:dispatch_sync(dispatch_queue_t queue, dispatch_block_t block)</strong><br>　<br>　      queue:队列<br>　<br>　      block:任务<br>　<br>　      把任务放进队列中执行<br>　<br>　2.  <strong>异步执行:dispatch_async(dispatch_queue_t queue, dispatch_block_t block)</strong><br>　<br> 　同步和异步的区别:<br> 　<br> 　<strong>同步</strong>:在当前线程中执行(不具备开线程的能力)<br> 　<br> 　<strong>异步</strong>:开辟新的线程执行任务(具备开线程能力,具体开几条暂时不说,下面会说)<br> 　<br> 　GCD的队列也有两种:<br> 　<br> 　1. <strong>串行队列</strong>:dispatch_queue_create(const char <em>label, dispatch_queue_attr_t attr);(主线程dispatch_get_main_queue(void)也是特殊的串行队列)<br> 　　第一个参数：队列名称<br> 　　<br> 　　第二个参数：队列类型<br> 　　<br> 　2. <strong>并发队列</strong>:也是使用dispatch_queue_create(const char </em>label, dispatch_queue_attr_t attr),不过系统已经为我们准备好了一个全局的并发队列dispatch_get_global_queue(long identifier, unsigned long flags),一般不需要我们去创建<br> 　<br> 　<br> 串行和并发的区别:  </p>
+<p> <strong>串行</strong>:一个一个的执行任务,遵守FIFO(先进先出)规则  </p>
+<p> <strong>并发</strong>:允许同时执行多个任务  </p>
+<p> 注意:(<strong>dispatch_queue_attr_t attr</strong>决定着队列的类型<strong>DISPATCH_QUEUE_SERIAL(NULL)</strong>串行队列(其中串行队列的宏值为NULL,所以可以用NULL来创建,像这样:<strong>dispatch_queue_create(@”NICAI”, NULL)</strong>,代表的是串行队列),<strong>DISPATCH_QUEUE_CONCURRENT</strong>并发队列).  </p>
+<p> 并发队列的优先级(long identifier):  </p>
+<p> <strong>#define DISPATCH_QUEUE_PRIORITY_HIGH</strong> 2 // 高</p>
+<p> <strong>#define DISPATCH_QUEUE_PRIORITY_DEFAULT</strong> 0 // 默认（中）</p>
+<p> <strong>#define DISPATCH_QUEUE_PRIORITY_LOW (-2)</strong> // 低</p>
+<p> <strong>#define DISPATCH_QUEUE_PRIORITY_BACKGROUND INT16_MIN</strong> // 后台  </p>
+<p> 有很多人会混淆串行,并发,异步,同步的概念.当然,他们是单独开辟线程执行任务,还是唯一线程执行任务,并不绝对.例如:在串行异步,并不会开开辟新的线程.看图:1.2  </p>
+<p> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/0kkBbgSwWyr1.*CaWRLYHaBS4f*YxlZlRBrNbhZpYFE!/b/dB4BAAAAAAAA&amp;bo=2ARkAQAAAAADAJw!&amp;rf=viewer_4" alt="图1.2">  </p>
+<p> 从上面我们可以得出几个规律:  </p>
+<p> 1.同步任务不会开辟新的线程(不管是串行队列还是并发队列)</p>
+<p> 2.异步任务只有在主线程的时候不会开辟新的线程,其他的都会开辟</p>
+<p> 3.并发队列只有在异步的时候才会并发的执行任务(也就是开多条线程,具体数量受系统控制,主线程除外)  </p>
+<p> 下面我们用代码来一一验证:  </p>
+<p> 1.<strong>全局队列异步执行:</strong>(1.3,1.4)  </p>
+<p> <img src="http://a1.qpic.cn/psb?/V11CFKUe0ogDzM/pjn*l4MsEEVYaAQ*SgL7nICBck51miu3MBYcvNqmjt8!/b/dHUAAAAAAAAA&amp;bo=2AQ2AgAAAAADAM0!&amp;rf=viewer_4" alt="1.3"><br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/Ej4gvd6Q9dGh9IPqzbQA7kif.v7zwERNa6OWYyWe3TE!/b/dB4BAAAAAAAA&amp;bo=2AR2AAAAAAARAJ0!&amp;rf=viewer_4" alt="1.4"> </p>
+<p> 结论:<strong>全局队列异步执行同时开启了三个线程(number分别为3,4,2,)并发的执行(并不是按照FIFO打印出1,2,3)[第一个红色的框里面是项目中打印出来的数字,第二个红色框里面number代表着线程的数量,创建的时候是累加,name代表着线程的名字]</strong>  </p>
+<p> 2.<strong>全局队列同步执行:</strong>(2.1,2.2) </p>
+<p> <img src="http://a1.qpic.cn/psb?/V11CFKUe0ogDzM/*sysy0PKstI13BUCoz9L.u2ay0tVjF99hOGX8YDwb7s!/b/dHUAAAAAAAAA&amp;bo=2AQGAgAAAAADAP0!&amp;rf=viewer_4" alt="2.1"><br> <img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/t6BYIf8LluY5soridC*GDn1jAeTxqObqTZdxygmKvaM!/b/dAEBAAAAAAAA&amp;bo=2ARlAAAAAAARAI4!&amp;rf=viewer_4" alt="2.2">  </p>
+<p> 结论:<strong>全局队列同步执行没有开启新的线程,在主线程执行任务</strong>  </p>
+<p> 3.<strong>串行队列同步执行:</strong>(3.1,.3.2)<br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/TPEq94T3*xgmZR*rSj1t728TzT.ZC4yWP0E2YCXHENw!/b/dB4BAAAAAAAA&amp;bo=2AQKAgAAAAADAPE!&amp;rf=viewer_4" alt="3.1"><br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/T1B*x6mNUC03fIDJItiL1NI87zTNqzkTK7psdhGDrVM!/b/dB4BAAAAAAAA&amp;bo=2ARfAAAAAAARALQ!&amp;rf=viewer_4" alt="3.2">  </p>
+<p> 结论:<strong>串行队列同步执行并不会创建新的线程,在主线程中执行</strong>  </p>
+<p> 4.串行队列异步执行:(4.1,.4.2)<br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/kTDybryLH.oC2*EARYtDVYHUgdetvc1Ql.T7r6p1jio!/b/dB4BAAAAAAAA&amp;bo=2AQRAgAAAAADAOo!&amp;rf=viewer_4" alt="4.1"><br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/yyrMB.ric6jfKYjCRrJ1vLrSYD3ttMFWNwuMT57Riss!/b/dB4BAAAAAAAA&amp;bo=2ARuAAAAAAARAIU!&amp;rf=viewer_4" alt="4.2">  </p>
+<p> 结论:<strong>串行队列异步执行会开辟新的线程,但只开辟了一个</strong>  </p>
+<p> 最后在总结一下:  </p>
+<p> 　1.在GDC中一个操作是多线程执行还是单线程执行取决于当前队列类型和执行方法，只有队列类型为并行队列并且使用异步方法执行时才能在多个线程中执行。</p>
+<p>　2.串行队列可以按顺序执行，并行队列的异步方法无法确定执行顺序。</p>
+<p>　3.UI界面的更新最好采用同步方法，其他操作采用异步方法。</p>
+<p>　GCD执行任务的方法并非只有简单的同步调用方法和异步调用方法，还有其他一些常用方法:<br> 　<br>　<strong>dispatch_apply()</strong>:重复执行某个任务，但是注意这个方法没有办法异步执行(为了不阻塞线程可以使用<strong>dispatch_async()</strong>包装一下再执行).</p>
+<p>　<strong>dispatch_once()</strong>:单次执行一个任务，此方法中的任务只会执行一次，重复调用也没办法重复执行(单例模式中常用此方法).</p>
+<p>　<strong>dispatch_time()</strong>：延迟一定的时间后执行.</p>
+<p>　<strong>dispatch_barrier_async()</strong>：使用此方法创建的任务首先会查看队列中有没有别的任务要执行，如果有，则会等待已有任务执行完毕再执行；同时在此方法后添加的任务必须等待此方法中任务执行后才能执行。（利用这个方法可以  控制执行顺）</p>
+<p>　<strong>dispatch_group_async()</strong>：实现对任务分组管理，如果一组任务全部完成可以通过<strong>dispatch_group_notify()</strong>方法获得完成通知(需要定义<strong>dispatch_group_t</strong>作为分组标识).<br>　<br><img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/w0hdkS02ZOCGvasjJiL9gztK2pvVaHa8wP6Bybzl6yA!/b/dLMAAAAAAAAA&amp;bo=2ARlAgAAAAADAJ4!&amp;rf=viewer_4" alt="dispatch_group_async"><br><img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/xPDAOEDeeVodRdXC9xHRIWrVKij2ugayyRBsABZCLhI!/b/dLMAAAAAAAAA&amp;bo=9gOEAAAAAAADAFQ!&amp;rf=viewer_4" alt="dispatch_group_notify"></p>
+<p> 　
+　
+　</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;　身为开发者的我们,总是会面临着各种各样的需求.必不可少的一个硬性规则:从用户体验的角度来开发项目!那么这就要求我们必须减少用户在使用程序中所需要等待的时间,看吧,多线程的概念出来了.&lt;/p&gt;
+&lt;p&gt;　我们经常在敲代码的时候边敲边听音乐,看看,这就是一个多线程的体现了(如果
+    
+    </summary>
+    
+    
+      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NS_OPTIONS与NS_ENUM的区别</title>
+    <link href="http://oneredfox.github.io/2014/07/20/NS_OPTIONS%E4%B8%8ENS_ENUM%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>http://oneredfox.github.io/2014/07/20/NS_OPTIONS与NS_ENUM的区别/</id>
+    <published>2014-07-20T14:55:08.000Z</published>
+    <updated>2017-07-27T02:20:27.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="NS-OPTIONS"><a href="#NS-OPTIONS" class="headerlink" title="NS_OPTIONS"></a>NS_OPTIONS</h3><pre><code>typedef NS_OPTIONS(NSUInteger, SDWebImageOptions) { 
+    SDWebImageRetryFailed = 1 &lt;&lt; 0, //值为2的0次方
+    SDWebImageLowPriority = 1 &lt;&lt; 1, //值为2的1次方 
+    SDWebImageCacheMemoryOnly = 1 &lt;&lt; 2, //值为2的2次方 
+    SDWebImageProgressiveDownload = 1 &lt;&lt; 3, //值为2的3次方     
+    SDWebImageRefreshCached = 1 &lt;&lt; 4 //值为2的4次方 
+};
+</code></pre><blockquote>
+<p>小括号中第一个为NSUInteger这个为固定值，第二个为枚举名字(自己定义),大括号中枚举项必须全部包含小括号的枚举类型，枚举项后面再跟上几个值的区别，这里枚举项是NSUInteger类型</p>
+</blockquote>
+<h3 id="NS-ENUM"><a href="#NS-ENUM" class="headerlink" title="NS_ENUM"></a>NS_ENUM</h3><pre><code>typedef NS_ENUM(NSInteger, SDWebImageOptions {
+     SDWebImageRetryFailed = 0, //值为0            SDWebImageLowPriority = 1, //值为1        SDWebImageCacheMemoryOnly = 2 //值为2       
+};
+</code></pre><blockquote>
+<p>小括号中第一个为NSInteger这个为固定值，第二个为枚举名称(自己定义)，大括号中枚举项必须包含小括号中自己定义的枚举类型，枚举项自己加后缀以视区别，大括号中的枚举项的值可自定义，若是定义了枚举项其中一项的值后面依次在它的前一项的值上加1，如这样：</p>
+</blockquote>
+<pre><code>typedef NS_ENUM(NSInteger, SDWebImageOptions) {
+    SDWebImageRetryFailed = 0, //值为0            SDWebImageLowPriority, //值为1             SDWebImageCacheMemoryOnly //值为2      
+ }; 
+</code></pre><p>//或者这样 </p>
+<pre><code>typedef NS_ENUM(NSInteger,SDWebImageOptions) {
+    SDWebImageRetryFailed = 0, //值为0            SDWebImageLowPriority = 2, //值为2         SDWebImageCacheMemoryOnly //值为3    
+};
+</code></pre><p>//若是都不定义值，默认第一项为0，后面依次枚举项的值加1。</p>
+<p>当然也可以下方这样写枚举，但是官方不推荐:</p>
+<pre><code>typedef enum { 
+    SDWebImageRetryFailed = 0,                 SDWebImageLowPriority = 1,
+     SDWebImageCacheMemoryOnly = 2  
+} SDWebImageOptions;
+</code></pre><h3 id="NS-ENUM与NS-OPTIONS的区别"><a href="#NS-ENUM与NS-OPTIONS的区别" class="headerlink" title="NS_ENUM与NS_OPTIONS的区别"></a>NS_ENUM与NS_OPTIONS的区别</h3><ul>
+<li><p>NS_ENUM枚举项的值为NSInteger，NS_OPTIONS枚举项的值为NSUInteger;</p>
+<blockquote>
+<p>这里为什么NS_ENUM用NSInteger，NS_OPTIONS用NSUInteger看后  面总结</p>
+</blockquote>
+</li>
+<li><p>NS_ENUM定义通用枚举，NS_OPTIONS定义位移枚举</p>
+<blockquote>
+<p>位移枚举即是在你需要的地方可以同时存在多个枚举值如这样：</p>
+</blockquote>
+<pre><code>UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] init];
+swipeGR.direction = UISwipeGestureRecognizerDirectionDown | UISwipeGestureRecognizerDirectionLeft | UISwipeGestureRecognizerDirectionRight;
+</code></pre><blockquote>
+<p>而NS_ENUM定义的枚举不能几个枚举项同时存在，只能选择其中一项，像这样：</p>
+</blockquote>
+<pre><code>   UITextField *textfiled =[[UITextField alloc]init];
+textfiled.keyboardType = UIKeyboardTypeDefault;
+</code></pre></li>
+<li><p>NS_OPTIONS的枚举项的值需要像这样表示1 &lt;&lt; 0，1 &lt;&lt; 1，2的几次方这样，而NS_ENUM可以直接给像1，2，3这样。</p>
+</li>
+</ul>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>  这里为什么会出现NS_OPTIONS与NS_ENUM且为什么不直接一个就行，且枚举值可多选。因为有个是否将代码按照C++模式编译，若是不按照C++模式编译，NS_OPTIONS与NS_ENUM展开方式就一样，若是要按照C++模式编译，就不同了。在使用或运算操作两个枚举值时，C++默认为运算结果的数据类型是枚举的底层数据类型即NSUInteger,且C++不允许它隐式转换为枚举类型本身，所以C++模式下定义了NS_OPTIONS宏以保证不出现类型转换。<br>到了这我们就知道了只要枚举值需要用到按位或（2个及以上枚举值可多个存在）就使用NS_OPTIONS，否则使用NS_ENUM。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;NS-OPTIONS&quot;&gt;&lt;a href=&quot;#NS-OPTIONS&quot; class=&quot;headerlink&quot; title=&quot;NS_OPTIONS&quot;&gt;&lt;/a&gt;NS_OPTIONS&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;typedef NS_OPTIONS(NSUInteger,
+    
+    </summary>
+    
+    
+      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CocoaPods的安装和使用:一</title>
+    <link href="http://oneredfox.github.io/2014/06/11/%E4%BD%BF%E7%94%A8CocoaPods/"/>
+    <id>http://oneredfox.github.io/2014/06/11/使用CocoaPods/</id>
+    <published>2014-06-10T16:00:00.000Z</published>
+    <updated>2017-07-27T02:20:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这里写下CocoaPods</p>
+<h3 id="一-CocoaPods-安装"><a href="#一-CocoaPods-安装" class="headerlink" title="一: CocoaPods 安装"></a>一: CocoaPods 安装</h3><p>  CocoaPods的安装方式很简单,Mac下自带ruby,直接使用ruby的gem命令即可.<br>  注意:ruby的软件源eubygems.org因为使用亚马逊的云服务,所以被屏蔽掉了,需要更下下ruby的源,这里使用ruby-china提供的镜像服务(如果直接使用sudo gem install cocoapods会发现半天没反应)</p>
+<p>  1.如果gem版本太低了,可以直接升级gem</p>
+<pre><code>sudo gem update --system
+</code></pre><p>  2.移除rubygems.org</p>
+<pre><code>gem sources --remove https://rubygems.org/ 
+</code></pre><p>  3.用淘宝提供的镜像服务替换源</p>
+<pre><code>gem sources -a https://ruby.taobao.org/
+</code></pre><p>  4.安装好后可以用 <code>gem sources -l</code>检查当前SOURCES源<br>   只有在终端出现下面文字才表明是成功的</p>
+<pre><code>*** CURRENT SOURCES ***                                             
+https://ruby.taobao.org/
+</code></pre><p>  5.上面所有的命令完成时,在终端运行</p>
+<pre><code>sudo gem install -n /usr/local/bin cocoapods --pre
+</code></pre><p>  6.注意点:</p>
+<pre><code>ruby -v可以查看当前ruby版本,
+rvm list known查看目前的所有ruby版本,
+如果提示command not found 请先安装rvm,
+curl -L get.rvm.io | bash -s stable
+</code></pre><p>  7.使用CocoaPods的镜像索引<br>    所有项目的Podspec文件都托管在<a href="https://github.com/CocoaPods/Specs.第一次执行pod" target="_blank" rel="external">https://github.com/CocoaPods/Specs.第一次执行pod</a> setup时,CocoaPods会将这些Podsapce索引文件更新到本地的~/.cocoapods/路径下,这个所以文件比较大,第一次更新时非常慢.友好人士在国内的服务器建立了Cocoapods索引库的镜像,所以执行索引跟新操作时候会快很多.具体操作方法如下:</p>
+<pre><code>pod repo remove master
+git clone https://github.com/CocoaPods/Specs.git ~/.cocoapods/repos/master
+pod repo update  
+</code></pre><p>   这是使用gitcafe上的镜像,将以上代码中的 <a href="https://gitcafe.com/akuandev/Specs.git" target="_blank" rel="external">https://gitcafe.com/akuandev/Specs.git</a> 替换成 <a href="https://git.oschina.net/akuandev/Specs.git" target="_blank" rel="external">https://git.oschina.net/akuandev/Specs.git</a> 即可使用oschina上的镜像。</p>
+<h3 id="二-CocoaPods使用"><a href="#二-CocoaPods使用" class="headerlink" title="二:CocoaPods使用"></a>二:CocoaPods使用</h3><p>  1.新建项目,cd到目录下<br>  2.vim一个名为Podfile的文件,如下格式,并将以来的库添加进去</p>
+<pre><code>platform :ios,10.2
+target &apos;your project&apos; do
+pod &apos;AFNetworking&apos;, &apos;~&gt;3.0.4&apos;
+end
+</code></pre><p>  3.执行命令 <code>pod install</code><br>    现在,第三方已经下载完并且设置好了编译参数和依赖,只需要记住如下两点:<br>    3.1使用CocoaPods生成的 .xcworkspace文件来打开工程<br>    3.2每次更改了Podfile文件,都需要重新执行以下 <code>pod insatall</code> 命令 </p>
+<p>  4.如果不知道第三方库的最新版本,可以使用命令行进行查找</p>
+<pre><code>pod search AFNetworking
+</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这里写下CocoaPods&lt;/p&gt;
+&lt;h3 id=&quot;一-CocoaPods-安装&quot;&gt;&lt;a href=&quot;#一-CocoaPods-安装&quot; class=&quot;headerlink&quot; title=&quot;一: CocoaPods 安装&quot;&gt;&lt;/a&gt;一: CocoaPods 安装&lt;/h3&gt;&lt;p
     
     </summary>
     
