@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://oneredfox.github.io/"/>
-  <updated>2017-07-27T02:20:48.000Z</updated>
+  <updated>2017-07-27T08:20:20.000Z</updated>
   <id>http://oneredfox.github.io/</id>
   
   <author>
@@ -14,6 +14,74 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>iOS-多线程-GCD-一</title>
+    <link href="http://oneredfox.github.io/2016/06/01/iOS-%E5%A4%9A%E7%BA%BF%E7%A8%8B-GCD-%E4%B8%80/"/>
+    <id>http://oneredfox.github.io/2016/06/01/iOS-多线程-GCD-一/</id>
+    <published>2016-05-31T16:00:00.000Z</published>
+    <updated>2017-07-27T08:20:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>　身为开发者的我们,总是会面临着各种各样的需求.必不可少的一个硬性规则:从用户体验的角度来开发项目!那么这就要求我们必须减少用户在使用程序中所需要等待的时间,看吧,多线程的概念出来了.</p>
+<p>　我们经常在敲代码的时候边敲边听音乐,看看,这就是一个多线程的体现了(如果敲代码的时候不能进行其他的操作,我们会怎么想?).通过一张图我们来看一下实现进程的必要性吧.<br>　<br><img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/qQt*SHh0le4hVRTdaXOI7qDPn1116hxI.shNE5nPBPE!/b/dPcAAAAAAAAA&amp;bo=EASAAgAAAAADALM!&amp;rf=viewer_4" alt="进程的必要性"></p>
+<p>　在iOS中,每启动一个进程都会创建一个主线程(一般用于刷新UI),这个线程是其他线程的父线程.由于在iOS中,除了主线程,其他的线程都是独立于Cocoa Touch的,所以只有主线程可以更新UI(不过现在好像其他线程也可能会成功,但是不推荐).常用的多线程开发主要有三种:<br>　<br>　1. <strong>NSThread</strong><br>　<br>　2. <strong>NSOperation</strong><br>　<br>　3. <strong>GCD</strong></p>
+<p>　这三种是随着iOS的发展逐渐引进来的,所以靠后的使用相对来说越简单,而且GCD也是Apple官方主推荐的.在这里我们也只讨论GCD.<br>　<br>　GCD全称(Grand Central Dispatch),他是基于在C语言上的,抽象成都很高,使用也非常的简单.先说下GCD的优点吧.</p>
+<p>　1. GCD是Apple官方为多核并发提供的解决方案<br>　<br>　2. GCD会自动利用CPU内核(不需要我们关心)<br>　<br>　3. GCD会自动管理线程的生命周期(不用我们手动管理)<br>　<br>　4. 总的来说就是我们只需要告诉GCD我们要执行什么任务,其他的都不用我们管理</p>
+<p>注意:GCD是纯C语言的,我们在用GCD的时候,面对的是函数,而不是方法.</p>
+<p> GCD中有两个核心的概念:</p>
+<p>　1. <strong>任务</strong>(我们要执行什么样的操作)<br> 　<br>　2. <strong>队列</strong>(专门用于存放任务的)</p>
+<p>　我们将任务添加到队列中,GCD会自动的将队列里的任务取出,放到对应的线程执行(FIFO).这几乎不用我们关心.<br>　<br>　GCD的任务分为两种:<br>　<br>　1. <strong>同步执行:dispatch_sync(dispatch_queue_t queue, dispatch_block_t block)</strong><br>　<br>　      queue:队列<br>　<br>　      block:任务<br>　<br>　      把任务放进队列中执行<br>　<br>　2.  <strong>异步执行:dispatch_async(dispatch_queue_t queue, dispatch_block_t block)</strong><br>　<br> 　同步和异步的区别:<br> 　<br> 　<strong>同步</strong>:在当前线程中执行(不具备开线程的能力)<br> 　<br> 　<strong>异步</strong>:开辟新的线程执行任务(具备开线程能力,具体开几条暂时不说,下面会说)<br> 　<br> 　GCD的队列也有两种:<br> 　<br> 　1. <strong>串行队列</strong>:dispatch_queue_create(const char <em>label, dispatch_queue_attr_t attr);(主线程dispatch_get_main_queue(void)也是特殊的串行队列)<br> 　　第一个参数：队列名称<br> 　　<br> 　　第二个参数：队列类型<br> 　　<br> 　2. <strong>并发队列</strong>:也是使用dispatch_queue_create(const char </em>label, dispatch_queue_attr_t attr),不过系统已经为我们准备好了一个全局的并发队列dispatch_get_global_queue(long identifier, unsigned long flags),一般不需要我们去创建<br> 　<br> 　<br> 串行和并发的区别:  </p>
+<p> <strong>串行</strong>:一个一个的执行任务,遵守FIFO(先进先出)规则  </p>
+<p> <strong>并发</strong>:允许同时执行多个任务  </p>
+<p> 注意:(<strong>dispatch_queue_attr_t attr</strong>决定着队列的类型<strong>DISPATCH_QUEUE_SERIAL(NULL)</strong>串行队列(其中串行队列的宏值为NULL,所以可以用NULL来创建,像这样:<strong>dispatch_queue_create(@”NICAI”, NULL)</strong>,代表的是串行队列),<strong>DISPATCH_QUEUE_CONCURRENT</strong>并发队列).  </p>
+<p> 并发队列的优先级(long identifier):  </p>
+<p> <strong>#define DISPATCH_QUEUE_PRIORITY_HIGH</strong> 2 // 高</p>
+<p> <strong>#define DISPATCH_QUEUE_PRIORITY_DEFAULT</strong> 0 // 默认（中）</p>
+<p> <strong>#define DISPATCH_QUEUE_PRIORITY_LOW (-2)</strong> // 低</p>
+<p> <strong>#define DISPATCH_QUEUE_PRIORITY_BACKGROUND INT16_MIN</strong> // 后台  </p>
+<p> 有很多人会混淆串行,并发,异步,同步的概念.当然,他们是单独开辟线程执行任务,还是唯一线程执行任务,并不绝对.例如:在串行异步,并不会开开辟新的线程.看图:1.2  </p>
+<p> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/0kkBbgSwWyr1.*CaWRLYHaBS4f*YxlZlRBrNbhZpYFE!/b/dB4BAAAAAAAA&amp;bo=2ARkAQAAAAADAJw!&amp;rf=viewer_4" alt="图1.2">  </p>
+<p> 从上面我们可以得出几个规律:  </p>
+<p> 1.同步任务不会开辟新的线程(不管是串行队列还是并发队列)</p>
+<p> 2.异步任务只有在主线程的时候不会开辟新的线程,其他的都会开辟</p>
+<p> 3.并发队列只有在异步的时候才会并发的执行任务(也就是开多条线程,具体数量受系统控制,主线程除外)  </p>
+<p> 下面我们用代码来一一验证:  </p>
+<p> 1.<strong>全局队列异步执行:</strong>(1.3,1.4)  </p>
+<p> <img src="http://a1.qpic.cn/psb?/V11CFKUe0ogDzM/pjn*l4MsEEVYaAQ*SgL7nICBck51miu3MBYcvNqmjt8!/b/dHUAAAAAAAAA&amp;bo=2AQ2AgAAAAADAM0!&amp;rf=viewer_4" alt="1.3"><br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/Ej4gvd6Q9dGh9IPqzbQA7kif.v7zwERNa6OWYyWe3TE!/b/dB4BAAAAAAAA&amp;bo=2AR2AAAAAAARAJ0!&amp;rf=viewer_4" alt="1.4"> </p>
+<p> 结论:<strong>全局队列异步执行同时开启了三个线程(number分别为3,4,2,)并发的执行(并不是按照FIFO打印出1,2,3)[第一个红色的框里面是项目中打印出来的数字,第二个红色框里面number代表着线程的数量,创建的时候是累加,name代表着线程的名字]</strong>  </p>
+<p> 2.<strong>全局队列同步执行:</strong>(2.1,2.2) </p>
+<p> <img src="http://a1.qpic.cn/psb?/V11CFKUe0ogDzM/*sysy0PKstI13BUCoz9L.u2ay0tVjF99hOGX8YDwb7s!/b/dHUAAAAAAAAA&amp;bo=2AQGAgAAAAADAP0!&amp;rf=viewer_4" alt="2.1"><br> <img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/t6BYIf8LluY5soridC*GDn1jAeTxqObqTZdxygmKvaM!/b/dAEBAAAAAAAA&amp;bo=2ARlAAAAAAARAI4!&amp;rf=viewer_4" alt="2.2">  </p>
+<p> 结论:<strong>全局队列同步执行没有开启新的线程,在主线程执行任务</strong>  </p>
+<p> 3.<strong>串行队列同步执行:</strong>(3.1,.3.2)<br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/TPEq94T3*xgmZR*rSj1t728TzT.ZC4yWP0E2YCXHENw!/b/dB4BAAAAAAAA&amp;bo=2AQKAgAAAAADAPE!&amp;rf=viewer_4" alt="3.1"><br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/T1B*x6mNUC03fIDJItiL1NI87zTNqzkTK7psdhGDrVM!/b/dB4BAAAAAAAA&amp;bo=2ARfAAAAAAARALQ!&amp;rf=viewer_4" alt="3.2">  </p>
+<p> 结论:<strong>串行队列同步执行并不会创建新的线程,在主线程中执行</strong>  </p>
+<p> 4.串行队列异步执行:(4.1,.4.2)<br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/kTDybryLH.oC2*EARYtDVYHUgdetvc1Ql.T7r6p1jio!/b/dB4BAAAAAAAA&amp;bo=2AQRAgAAAAADAOo!&amp;rf=viewer_4" alt="4.1"><br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/yyrMB.ric6jfKYjCRrJ1vLrSYD3ttMFWNwuMT57Riss!/b/dB4BAAAAAAAA&amp;bo=2ARuAAAAAAARAIU!&amp;rf=viewer_4" alt="4.2">  </p>
+<p> 结论:<strong>串行队列异步执行会开辟新的线程,但只开辟了一个</strong>  </p>
+<p> 最后在总结一下:  </p>
+<p> 　1.在GDC中一个操作是多线程执行还是单线程执行取决于当前队列类型和执行方法，只有队列类型为并行队列并且使用异步方法执行时才能在多个线程中执行。</p>
+<p>　2.串行队列可以按顺序执行，并行队列的异步方法无法确定执行顺序。</p>
+<p>　3.UI界面的更新最好采用同步方法，其他操作采用异步方法。</p>
+<p>　GCD执行任务的方法并非只有简单的同步调用方法和异步调用方法，还有其他一些常用方法:<br> 　<br>　<strong>dispatch_apply()</strong>:重复执行某个任务，但是注意这个方法没有办法异步执行(为了不阻塞线程可以使用<strong>dispatch_async()</strong>包装一下再执行).</p>
+<p>　<strong>dispatch_once()</strong>:单次执行一个任务，此方法中的任务只会执行一次，重复调用也没办法重复执行(单例模式中常用此方法).</p>
+<p>　<strong>dispatch_time()</strong>：延迟一定的时间后执行.</p>
+<p>　<strong>dispatch_barrier_async()</strong>：使用此方法创建的任务首先会查看队列中有没有别的任务要执行，如果有，则会等待已有任务执行完毕再执行；同时在此方法后添加的任务必须等待此方法中任务执行后才能执行。（利用这个方法可以  控制执行顺）</p>
+<p>　<strong>dispatch_group_async()</strong>：实现对任务分组管理，如果一组任务全部完成可以通过<strong>dispatch_group_notify()</strong>方法获得完成通知(需要定义<strong>dispatch_group_t</strong>作为分组标识).<br>　<br><img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/w0hdkS02ZOCGvasjJiL9gztK2pvVaHa8wP6Bybzl6yA!/b/dLMAAAAAAAAA&amp;bo=2ARlAgAAAAADAJ4!&amp;rf=viewer_4" alt="dispatch_group_async"><br><img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/xPDAOEDeeVodRdXC9xHRIWrVKij2ugayyRBsABZCLhI!/b/dLMAAAAAAAAA&amp;bo=9gOEAAAAAAADAFQ!&amp;rf=viewer_4" alt="dispatch_group_notify"></p>
+<p>　<a href="https://github.com/oneredfox/GCDdemo" target="_blank" rel="external">demo</a></p>
+<p> 　
+　
+　</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;　身为开发者的我们,总是会面临着各种各样的需求.必不可少的一个硬性规则:从用户体验的角度来开发项目!那么这就要求我们必须减少用户在使用程序中所需要等待的时间,看吧,多线程的概念出来了.&lt;/p&gt;
+&lt;p&gt;　我们经常在敲代码的时候边敲边听音乐,看看,这就是一个多线程的体现了(如果
+    
+    </summary>
+    
+    
+      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>NSCache</title>
@@ -50,6 +118,36 @@
     <summary type="html">
     
       &lt;h1 id=&quot;NSCache-基本介绍&quot;&gt;&lt;a href=&quot;#NSCache-基本介绍&quot; class=&quot;headerlink&quot; title=&quot;NSCache 基本介绍&quot;&gt;&lt;/a&gt;NSCache 基本介绍&lt;/h1&gt;&lt;p&gt;&lt;code&gt;NSCache&lt;/code&gt;是苹果官方提供的缓存
+    
+    </summary>
+    
+    
+      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS-多线程-GCD-二</title>
+    <link href="http://oneredfox.github.io/2016/04/11/iOS-%E5%A4%9A%E7%BA%BF%E7%A8%8B-GCD-%E4%BA%8C/"/>
+    <id>http://oneredfox.github.io/2016/04/11/iOS-多线程-GCD-二/</id>
+    <published>2016-04-10T16:00:00.000Z</published>
+    <updated>2017-07-27T08:19:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近总是忙着忙那,好久没动过笔了<br>　<br>　<strong>dispatch_semaphore_create</strong>,dispatch_semaphore_wait,dispatch_semaphore_signal<strong>在多线程中控制多线程的并发数目,也可以达到线程锁的功效,先大致的说下他们每个的作用.  
+　    
+　</strong>dispatch_semaphore_create(long value)**:代表信号总量(信号就是你想每次执行几个任务)</p>
+<p>　<strong>dispatch_semaphore_wait(dispatch_semaphore_t dsema, dispatch_time_t timeout)</strong>:等待信号,可以设置超时参数.如果信号量&gt;0,那么会继续执行,并且总的信号量-1;如果信号量=0,则会阻塞当前的线程</p>
+<p>　<strong>dispatch_semaphore_signal(dispatch_semaphore_t dsema)</strong>:通知信号，如果等待线程被唤醒则返回非0,否则返回0.并且会让信号总量+1.</p>
+<p>　下面说说用法<br>　<br>　<strong>一.比如我现在想执行10个任务,休息两秒后呢,继续执行10各任务,再休息两秒,在执行…可以这么做(如图1.1):</strong><br>　<img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/Z10dS.*IHAwl9F1TW1Twg6olFwcWRQScu7cje7kEI14!/b/dLMAAAAAAAAA&amp;bo=2AT5AQAAAAADBwY!&amp;rf=viewer_4" alt="1.1"><br>　<br>　简单解释下上面图片中代码的意思:创建了一个初使值为3的semaphore,每一次for循环都会创建一个新的线程,线程结束的时候会发送一个信号,线程创建之前会信号等待,所以当同时创建了10个线程之后,for循环就会阻塞,等待有线程结束之后会增加一个信号才继续执行,如此就形成了对并发的控制,如上就是一个并发数为3的一个线程队列.<br>　<br>　<strong>二:生产者—消费者模式</strong><br>　<br>　如图2.2<br>　<br>　<img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/Xt965aVBNHZlZQSYFgP5RQC9ncm2eWSOLRZoQ7gXsDI!/b/dBkBAAAAAAAA&amp;bo=YQSAAgAAAAADAMI!&amp;rf=viewer_4" alt="2.2"><br>　<br>　简单说下上面代码:创建了两个并发队列,semaphore初始值设为1,两个队列的执行情况:1.生产队列执行到if时候,信号总量变为1,并生产了第一个蛋糕,并睡两秒,2.消费者队列执行到等待信号的时候,信号总量0,阻塞当前线程,一直等到消费者队列执行完通知信号是,信号总量变为1,继续执行,拿到了蛋糕,信号总量再次变为0.<br>　<br>　<strong>三:应用简单示例:同步下载9张图片,下载完一张显示一张(线程锁的功能)</strong></p>
+<p>　代码下面会附上demo,简单说下实现:首先把信号总量设为1,并创建了9个线程,每个线程负责现在一张图片,下载图片的时候开启等待信号,下载完成后更新界面,并发送通知信号  </p>
+<p>　<a href="https://github.com/oneredfox/GCDdemo" target="_blank" rel="external">最后附上demo</a>
+　
+　</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近总是忙着忙那,好久没动过笔了&lt;br&gt;　&lt;br&gt;　&lt;strong&gt;dispatch_semaphore_create&lt;/strong&gt;,dispatch_semaphore_wait,dispatch_semaphore_signal&lt;strong&gt;在多线程中控制多线程的
     
     </summary>
     
@@ -257,73 +355,6 @@ UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWit
     <summary type="html">
     
       &lt;h3 id=&quot;一-我们有时候需要将一个Core-Foundation对象转换成一个Objective-C对象-这个时候我们需要告诉编译器-转换过程中引用计数如何调整-这时候就引入了与bridge相关的关键字&quot;&gt;&lt;a href=&quot;#一-我们有时候需要将一个Core-Foundat
-    
-    </summary>
-    
-    
-      <category term="三尾" scheme="http://oneredfox.github.io/tags/%E4%B8%89%E5%B0%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS开发-多线程-GCD</title>
-    <link href="http://oneredfox.github.io/2014/08/11/iOS%E5%BC%80%E5%8F%91-%E5%A4%9A%E7%BA%BF%E7%A8%8B-GCD-%E4%B8%80/"/>
-    <id>http://oneredfox.github.io/2014/08/11/iOS开发-多线程-GCD-一/</id>
-    <published>2014-08-10T16:00:00.000Z</published>
-    <updated>2017-07-27T08:00:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>　身为开发者的我们,总是会面临着各种各样的需求.必不可少的一个硬性规则:从用户体验的角度来开发项目!那么这就要求我们必须减少用户在使用程序中所需要等待的时间,看吧,多线程的概念出来了.</p>
-<p>　我们经常在敲代码的时候边敲边听音乐,看看,这就是一个多线程的体现了(如果敲代码的时候不能进行其他的操作,我们会怎么想?).通过一张图我们来看一下实现进程的必要性吧.<br>　<br><img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/qQt*SHh0le4hVRTdaXOI7qDPn1116hxI.shNE5nPBPE!/b/dPcAAAAAAAAA&amp;bo=EASAAgAAAAADALM!&amp;rf=viewer_4" alt="进程的必要性"></p>
-<p>　在iOS中,每启动一个进程都会创建一个主线程(一般用于刷新UI),这个线程是其他线程的父线程.由于在iOS中,除了主线程,其他的线程都是独立于Cocoa Touch的,所以只有主线程可以更新UI(不过现在好像其他线程也可能会成功,但是不推荐).常用的多线程开发主要有三种:<br>　<br>　1. <strong>NSThread</strong><br>　<br>　2. <strong>NSOperation</strong><br>　<br>　3. <strong>GCD</strong></p>
-<p>　这三种是随着iOS的发展逐渐引进来的,所以靠后的使用相对来说越简单,而且GCD也是Apple官方主推荐的.在这里我们也只讨论GCD.<br>　<br>　GCD全称(Grand Central Dispatch),他是基于在C语言上的,抽象成都很高,使用也非常的简单.先说下GCD的优点吧.</p>
-<p>　1. GCD是Apple官方为多核并发提供的解决方案<br>　<br>　2. GCD会自动利用CPU内核(不需要我们关心)<br>　<br>　3. GCD会自动管理线程的生命周期(不用我们手动管理)<br>　<br>　4. 总的来说就是我们只需要告诉GCD我们要执行什么任务,其他的都不用我们管理</p>
-<p>注意:GCD是纯C语言的,我们在用GCD的时候,面对的是函数,而不是方法.</p>
-<p> GCD中有两个核心的概念:</p>
-<p>　1. <strong>任务</strong>(我们要执行什么样的操作)<br> 　<br>　2. <strong>队列</strong>(专门用于存放任务的)</p>
-<p>　我们将任务添加到队列中,GCD会自动的将队列里的任务取出,放到对应的线程执行(FIFO).这几乎不用我们关心.<br>　<br>　GCD的任务分为两种:<br>　<br>　1. <strong>同步执行:dispatch_sync(dispatch_queue_t queue, dispatch_block_t block)</strong><br>　<br>　      queue:队列<br>　<br>　      block:任务<br>　<br>　      把任务放进队列中执行<br>　<br>　2.  <strong>异步执行:dispatch_async(dispatch_queue_t queue, dispatch_block_t block)</strong><br>　<br> 　同步和异步的区别:<br> 　<br> 　<strong>同步</strong>:在当前线程中执行(不具备开线程的能力)<br> 　<br> 　<strong>异步</strong>:开辟新的线程执行任务(具备开线程能力,具体开几条暂时不说,下面会说)<br> 　<br> 　GCD的队列也有两种:<br> 　<br> 　1. <strong>串行队列</strong>:dispatch_queue_create(const char <em>label, dispatch_queue_attr_t attr);(主线程dispatch_get_main_queue(void)也是特殊的串行队列)<br> 　　第一个参数：队列名称<br> 　　<br> 　　第二个参数：队列类型<br> 　　<br> 　2. <strong>并发队列</strong>:也是使用dispatch_queue_create(const char </em>label, dispatch_queue_attr_t attr),不过系统已经为我们准备好了一个全局的并发队列dispatch_get_global_queue(long identifier, unsigned long flags),一般不需要我们去创建<br> 　<br> 　<br> 串行和并发的区别:  </p>
-<p> <strong>串行</strong>:一个一个的执行任务,遵守FIFO(先进先出)规则  </p>
-<p> <strong>并发</strong>:允许同时执行多个任务  </p>
-<p> 注意:(<strong>dispatch_queue_attr_t attr</strong>决定着队列的类型<strong>DISPATCH_QUEUE_SERIAL(NULL)</strong>串行队列(其中串行队列的宏值为NULL,所以可以用NULL来创建,像这样:<strong>dispatch_queue_create(@”NICAI”, NULL)</strong>,代表的是串行队列),<strong>DISPATCH_QUEUE_CONCURRENT</strong>并发队列).  </p>
-<p> 并发队列的优先级(long identifier):  </p>
-<p> <strong>#define DISPATCH_QUEUE_PRIORITY_HIGH</strong> 2 // 高</p>
-<p> <strong>#define DISPATCH_QUEUE_PRIORITY_DEFAULT</strong> 0 // 默认（中）</p>
-<p> <strong>#define DISPATCH_QUEUE_PRIORITY_LOW (-2)</strong> // 低</p>
-<p> <strong>#define DISPATCH_QUEUE_PRIORITY_BACKGROUND INT16_MIN</strong> // 后台  </p>
-<p> 有很多人会混淆串行,并发,异步,同步的概念.当然,他们是单独开辟线程执行任务,还是唯一线程执行任务,并不绝对.例如:在串行异步,并不会开开辟新的线程.看图:1.2  </p>
-<p> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/0kkBbgSwWyr1.*CaWRLYHaBS4f*YxlZlRBrNbhZpYFE!/b/dB4BAAAAAAAA&amp;bo=2ARkAQAAAAADAJw!&amp;rf=viewer_4" alt="图1.2">  </p>
-<p> 从上面我们可以得出几个规律:  </p>
-<p> 1.同步任务不会开辟新的线程(不管是串行队列还是并发队列)</p>
-<p> 2.异步任务只有在主线程的时候不会开辟新的线程,其他的都会开辟</p>
-<p> 3.并发队列只有在异步的时候才会并发的执行任务(也就是开多条线程,具体数量受系统控制,主线程除外)  </p>
-<p> 下面我们用代码来一一验证:  </p>
-<p> 1.<strong>全局队列异步执行:</strong>(1.3,1.4)  </p>
-<p> <img src="http://a1.qpic.cn/psb?/V11CFKUe0ogDzM/pjn*l4MsEEVYaAQ*SgL7nICBck51miu3MBYcvNqmjt8!/b/dHUAAAAAAAAA&amp;bo=2AQ2AgAAAAADAM0!&amp;rf=viewer_4" alt="1.3"><br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/Ej4gvd6Q9dGh9IPqzbQA7kif.v7zwERNa6OWYyWe3TE!/b/dB4BAAAAAAAA&amp;bo=2AR2AAAAAAARAJ0!&amp;rf=viewer_4" alt="1.4"> </p>
-<p> 结论:<strong>全局队列异步执行同时开启了三个线程(number分别为3,4,2,)并发的执行(并不是按照FIFO打印出1,2,3)[第一个红色的框里面是项目中打印出来的数字,第二个红色框里面number代表着线程的数量,创建的时候是累加,name代表着线程的名字]</strong>  </p>
-<p> 2.<strong>全局队列同步执行:</strong>(2.1,2.2) </p>
-<p> <img src="http://a1.qpic.cn/psb?/V11CFKUe0ogDzM/*sysy0PKstI13BUCoz9L.u2ay0tVjF99hOGX8YDwb7s!/b/dHUAAAAAAAAA&amp;bo=2AQGAgAAAAADAP0!&amp;rf=viewer_4" alt="2.1"><br> <img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/t6BYIf8LluY5soridC*GDn1jAeTxqObqTZdxygmKvaM!/b/dAEBAAAAAAAA&amp;bo=2ARlAAAAAAARAI4!&amp;rf=viewer_4" alt="2.2">  </p>
-<p> 结论:<strong>全局队列同步执行没有开启新的线程,在主线程执行任务</strong>  </p>
-<p> 3.<strong>串行队列同步执行:</strong>(3.1,.3.2)<br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/TPEq94T3*xgmZR*rSj1t728TzT.ZC4yWP0E2YCXHENw!/b/dB4BAAAAAAAA&amp;bo=2AQKAgAAAAADAPE!&amp;rf=viewer_4" alt="3.1"><br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/T1B*x6mNUC03fIDJItiL1NI87zTNqzkTK7psdhGDrVM!/b/dB4BAAAAAAAA&amp;bo=2ARfAAAAAAARALQ!&amp;rf=viewer_4" alt="3.2">  </p>
-<p> 结论:<strong>串行队列同步执行并不会创建新的线程,在主线程中执行</strong>  </p>
-<p> 4.串行队列异步执行:(4.1,.4.2)<br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/kTDybryLH.oC2*EARYtDVYHUgdetvc1Ql.T7r6p1jio!/b/dB4BAAAAAAAA&amp;bo=2AQRAgAAAAADAOo!&amp;rf=viewer_4" alt="4.1"><br> <img src="http://a2.qpic.cn/psb?/V11CFKUe0ogDzM/yyrMB.ric6jfKYjCRrJ1vLrSYD3ttMFWNwuMT57Riss!/b/dB4BAAAAAAAA&amp;bo=2ARuAAAAAAARAIU!&amp;rf=viewer_4" alt="4.2">  </p>
-<p> 结论:<strong>串行队列异步执行会开辟新的线程,但只开辟了一个</strong>  </p>
-<p> 最后在总结一下:  </p>
-<p> 　1.在GDC中一个操作是多线程执行还是单线程执行取决于当前队列类型和执行方法，只有队列类型为并行队列并且使用异步方法执行时才能在多个线程中执行。</p>
-<p>　2.串行队列可以按顺序执行，并行队列的异步方法无法确定执行顺序。</p>
-<p>　3.UI界面的更新最好采用同步方法，其他操作采用异步方法。</p>
-<p>　GCD执行任务的方法并非只有简单的同步调用方法和异步调用方法，还有其他一些常用方法:<br> 　<br>　<strong>dispatch_apply()</strong>:重复执行某个任务，但是注意这个方法没有办法异步执行(为了不阻塞线程可以使用<strong>dispatch_async()</strong>包装一下再执行).</p>
-<p>　<strong>dispatch_once()</strong>:单次执行一个任务，此方法中的任务只会执行一次，重复调用也没办法重复执行(单例模式中常用此方法).</p>
-<p>　<strong>dispatch_time()</strong>：延迟一定的时间后执行.</p>
-<p>　<strong>dispatch_barrier_async()</strong>：使用此方法创建的任务首先会查看队列中有没有别的任务要执行，如果有，则会等待已有任务执行完毕再执行；同时在此方法后添加的任务必须等待此方法中任务执行后才能执行。（利用这个方法可以  控制执行顺）</p>
-<p>　<strong>dispatch_group_async()</strong>：实现对任务分组管理，如果一组任务全部完成可以通过<strong>dispatch_group_notify()</strong>方法获得完成通知(需要定义<strong>dispatch_group_t</strong>作为分组标识).<br>　<br><img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/w0hdkS02ZOCGvasjJiL9gztK2pvVaHa8wP6Bybzl6yA!/b/dLMAAAAAAAAA&amp;bo=2ARlAgAAAAADAJ4!&amp;rf=viewer_4" alt="dispatch_group_async"><br><img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/xPDAOEDeeVodRdXC9xHRIWrVKij2ugayyRBsABZCLhI!/b/dLMAAAAAAAAA&amp;bo=9gOEAAAAAAADAFQ!&amp;rf=viewer_4" alt="dispatch_group_notify"></p>
-<p> 　
-　
-　</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;　身为开发者的我们,总是会面临着各种各样的需求.必不可少的一个硬性规则:从用户体验的角度来开发项目!那么这就要求我们必须减少用户在使用程序中所需要等待的时间,看吧,多线程的概念出来了.&lt;/p&gt;
-&lt;p&gt;　我们经常在敲代码的时候边敲边听音乐,看看,这就是一个多线程的体现了(如果
     
     </summary>
     

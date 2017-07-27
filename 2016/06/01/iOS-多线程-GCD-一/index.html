@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>iOS开发-多线程-GCD | 刘子兴的博客</title>
+    <title>iOS-多线程-GCD-一 | 刘子兴的博客</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="最近比较懒...">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="iOS开发-多线程-GCD | 刘子兴的博客">
+    <meta name="twitter:title" content="iOS-多线程-GCD-一 | 刘子兴的博客">
     <meta name="twitter:description" content="最近比较懒...">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="iOS开发-多线程-GCD | 刘子兴的博客">
+    <meta property="og:title" content="iOS-多线程-GCD-一 | 刘子兴的博客">
     <meta property="og:description" content="最近比较懒...">
 
     
@@ -37,7 +37,7 @@
     <link rel="alternate" type="application/rss+xml" title="刘子兴的博客" href="/atom.xml">
     
 
-    <link rel="canonical" href="http://oneredfox.github.io/2014/08/11/iOS开发-多线程-GCD-一/"/>
+    <link rel="canonical" href="http://oneredfox.github.io/2016/06/01/iOS-多线程-GCD-一/"/>
 
                  
 </head>
@@ -138,7 +138,7 @@
 
   <header class="post-header">
     <div class="post-meta">
-      <time datetime="2014-08-10T16:00:00.000Z" class="post-list__meta--date date">2014-08-11</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
+      <time datetime="2016-05-31T16:00:00.000Z" class="post-list__meta--date date">2016-06-01</time> &#8226; <span class="post-meta__tags tags">于&nbsp;
   <a class="tag-link" href="/tags/三尾/">三尾</a>
  </span>
       <span class="page-pv">
@@ -146,7 +146,7 @@
       </span> 
    
     </div>
-    <h1 class="post-title">iOS开发-多线程-GCD</h1>
+    <h1 class="post-title">iOS-多线程-GCD-一</h1>
   </header>
 
   <section class="post">
@@ -193,6 +193,7 @@
 <p>　<strong>dispatch_time()</strong>：延迟一定的时间后执行.</p>
 <p>　<strong>dispatch_barrier_async()</strong>：使用此方法创建的任务首先会查看队列中有没有别的任务要执行，如果有，则会等待已有任务执行完毕再执行；同时在此方法后添加的任务必须等待此方法中任务执行后才能执行。（利用这个方法可以  控制执行顺）</p>
 <p>　<strong>dispatch_group_async()</strong>：实现对任务分组管理，如果一组任务全部完成可以通过<strong>dispatch_group_notify()</strong>方法获得完成通知(需要定义<strong>dispatch_group_t</strong>作为分组标识).<br>　<br><img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/w0hdkS02ZOCGvasjJiL9gztK2pvVaHa8wP6Bybzl6yA!/b/dLMAAAAAAAAA&amp;bo=2ARlAgAAAAADAJ4!&amp;rf=viewer_4" alt="dispatch_group_async"><br><img src="http://a3.qpic.cn/psb?/V11CFKUe0ogDzM/xPDAOEDeeVodRdXC9xHRIWrVKij2ugayyRBsABZCLhI!/b/dLMAAAAAAAAA&amp;bo=9gOEAAAAAAADAFQ!&amp;rf=viewer_4" alt="dispatch_group_notify"></p>
+<p>　<a href="https://github.com/oneredfox/GCDdemo" target="_blank" rel="external">demo</a></p>
 <p> 　
 　
 　</p>
@@ -207,36 +208,20 @@
                
             <div class="read-more-item">
                 <span class="read-more-item-dim">最近的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2014/07/20/NS_OPTIONS与NS_ENUM的区别/" title="NS_OPTIONS与NS_ENUM的区别">NS_OPTIONS与NS_ENUM的区别</a></h2>
+                <h2 class="post-list__post-title post-title"><a href="/2016/04/21/NSCache/" title="NSCache">NSCache</a></h2>
                 <p class="excerpt">
                 
-                NS_OPTIONStypedef NS_OPTIONS(NSUInteger, SDWebImageOptions) { 
-    SDWebImageRetryFailed = 1 &amp;lt;&amp;lt; 0, //值为2的0次方
-    SDWebImageLowPriority = 1 &amp;lt;&amp;
+                NSCache 基本介绍NSCache是苹果官方提供的缓存类,它的用法和NSMutableDictionary非常类似.
+NSCache是一个类似于集合的容器,即缓存.它存储key-value,这一点非常类似NSDictionary. 开发者一般用NSCache来缓存临时存储短时间但是使用创建成本高
                 &hellip;
                 </p>
-                <div class="post-list__meta"><time datetime="2014-07-20T14:55:08.000Z" class="post-list__meta--date date">2014-07-20</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
+                <div class="post-list__meta"><time datetime="2016-04-21T14:55:08.000Z" class="post-list__meta--date date">2016-04-21</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
   <a class="tag-link" href="/tags/三尾/">三尾</a>
-</span><a class="btn-border-small" href="/2014/07/20/NS_OPTIONS与NS_ENUM的区别/">继续阅读</a></div>
+</span><a class="btn-border-small" href="/2016/04/21/NSCache/">继续阅读</a></div>
                            
             </div>
         
         
-               
-            <div class="read-more-item">
-                <span class="read-more-item-dim">更早的文章</span>
-                <h2 class="post-list__post-title post-title"><a href="/2015/04/20/日常总结/" title="日常总结">日常总结</a></h2>
-                <p class="excerpt">
-                
-                一:我们有时候需要将一个Core Foundation对象转换成一个Objective-C对象,这个时候我们需要告诉编译器,转换过程中引用计数如何调整,这时候就引入了与bridge相关的关键字,
-__bridge:只做类型转换,不修改相关对象的引用技术,原来的Core Foundation对象在不用
-                &hellip;
-                </p>
-                <div class="post-list__meta"><time datetime="2015-04-20T14:55:08.000Z" class="post-list__meta--date date">2015-04-20</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;
-  <a class="tag-link" href="/tags/三尾/">三尾</a>
-</span><a class="btn-border-small" href="/2015/04/20/日常总结/">继续阅读</a></div>
-                       
-            </div>
         
      
    
